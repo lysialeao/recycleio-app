@@ -1,10 +1,11 @@
 import GlobalStyle from './styles/global'
+import { Routes } from './routes'
 
 const App = () => {
   return (
     <>
-    <p>recycleio</p>
-    <GlobalStyle/>
+      <Routes />
+      <GlobalStyle/>
     </>
   )
 }
