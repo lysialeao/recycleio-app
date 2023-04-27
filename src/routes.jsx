@@ -4,13 +4,28 @@ import {
    Routes as Router
 } from 'react-router-dom'
 
-import { routes } from './enum/routes'
+import { SignIn } from './views/SignIn'
+import { SignUp  } from './views/SignUp'
+import { Home } from './views/Home'
+import { Login } from './views/Login/index'
+import { LandingPage } from './views/LandingPage'
+import { FindCollectionPoint } from './views/FindCollectionPoint'
 
 export const Routes = () => {
+
+   const Private = ({ Item }) => {
+      const sigend = false;
+
+      return sigend > 0 ? <Item /> : <SignIn />
+   }
+
    return(
       <BrowserRouter>
          <Router>
-            { routes.map((route, index) => <Route element={route.element} path={route.path} key={index} exact/>) }
+            <Route element={<LandingPage />} path={'/'} exact/>
+            <Route element={<Login />} path={'/login'} exact/>
+            <Route element={<FindCollectionPoint/>} path='/find-collection-point' exact />
+            <Route element={<Private Item={Home} />} path={'/home'} exact/>
          </Router>
       </BrowserRouter>
     )
