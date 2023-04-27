@@ -1,11 +1,15 @@
+import { Layout } from '../../components/Layout'
+
 import { Container } from './styles'
 
 export const LandingPage = () => {
 
   return(
-    <Container>
-      <div><p>recycle.io</p></div>
-    </Container>
+    <Layout>
+      <Container>
+        <div><p>recycle.io</p></div>
+      </Container>
+    </Layout>
   )
 }
 
