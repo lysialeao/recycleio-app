@@ -8,4 +8,13 @@ export const Container = styled.div`
   flex-direction: column;
 
   padding: ${({ theme }) => theme.padding.small};
+
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    color: ${({ theme }) => theme.color.primary.main};
+    border-color: ${({ theme }) => theme.color.primary.main};
+  }
+
+  .p-tabview .p-tabview-nav .p-tabview-ink-bar {
+    background-color: ${({ theme }) => theme.color.primary.main};
+  }
 `

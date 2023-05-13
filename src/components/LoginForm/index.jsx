@@ -22,7 +22,7 @@ export const LoginForm = ({ onChange, onSubmit, loading }) => {
         <SelectButton value={'type'} onChange={(event) => onChange({ id: 'type', value: event.value })} options={['cnpj', 'cpf']} required />
       </div>
       <Button label="Login" className="p-button-success" loading={loading} />
-      <p>Não tem uma conta? registre-se</p>
+      <p>Não tem uma conta? <a href='/register'>registre-se</a></p>
     </Form>
   )
 }

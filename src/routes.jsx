@@ -4,8 +4,7 @@ import {
    Routes as Router
 } from 'react-router-dom'
 
-import { SignIn } from './views/SignIn'
-import { SignUp  } from './views/SignUp'
+import { Register } from './views/Register'
 import { Home } from './views/Home'
 import { Login } from './views/Login/index'
 import { LandingPage } from './views/LandingPage'
@@ -16,7 +15,7 @@ export const Routes = () => {
    const Private = ({ Item }) => {
       const sigend = false;
 
-      return sigend > 0 ? <Item /> : <SignIn />
+      return sigend > 0 ? <Item /> : <Login />
    }
 
    return(
@@ -26,6 +25,7 @@ export const Routes = () => {
             <Route element={<Login />} path={'/login'} exact/>
             <Route element={<FindCollectionPoint/>} path='/find-collection-point' exact />
             <Route element={<Private Item={Home} />} path={'/home'} exact/>
+            <Route element={<Register />} path='/register' exact />
          </Router>
       </BrowserRouter>
     )

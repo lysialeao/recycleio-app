@@ -19,4 +19,8 @@ export const Form = styled.form`
   .p-button {
     width: 100%;
   }
+
+  a {
+    text-decoration: none;
+  }
 `
