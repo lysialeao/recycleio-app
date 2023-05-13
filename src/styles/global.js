@@ -21,8 +21,8 @@ export const GlobalStyle = createGlobalStyle`
     body {
         font-family: (--font-family);
         font: 14px 'Roboto', sans-serif;
-        background: #ececdd;
-        color: #333;
+        background: ${({ theme }) => theme.color.white};
+        color:  ${({ theme }) => theme.color.black};
         -web-kit-smoothing: antialiased !important;
     }
 
@@ -35,11 +35,11 @@ export const GlobalStyle = createGlobalStyle`
       }
 
       body::-webkit-scrollbar-track {
-        background: #648a64;
+        background: ${({ theme }) => theme.color.primary.main};
       }
 
       body::-webkit-scrollbar-thumb {
-        background-color: #e1e3ac;
+        background-color: ${({ theme }) => theme.color.primary.contrastText};
         border-radius: 50px;
       }
 `
