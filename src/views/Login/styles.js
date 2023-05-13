@@ -12,11 +12,13 @@ export const Container = styled.div`
 `
 export const ImageContent = styled.div`
   width: 50%;
+  height: 100%;
 
-  background-image: url('https://plus.unsplash.com/premium_photo-1664283229483-cc9f3920e5b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=780&q=80');
+  background-image: url('https://cdn.dribbble.com/users/1565012/screenshots/6337189/ecology_0.jpg?compress=1&resize=768x576&vertical=top');
 
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   opacity: 0.8;
 `
 export const Content = styled.div`
