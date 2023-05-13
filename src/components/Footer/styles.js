@@ -10,6 +10,6 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  background-color: #556B2F	;
-  color: #ececdd;
+  background-color: ${({ theme }) => theme.color.primary.main}	;
+  color: ${({ theme }) => theme.color.white};
 `
