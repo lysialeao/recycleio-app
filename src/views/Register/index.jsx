@@ -7,8 +7,9 @@ import { USERS } from '../../constants/user'
 
 import { RegisterFormUser } from '../../components/RegisterFormUser'
 import { RegisterFormCollectionPoint } from '../../components/RegisterFormCollectionPoint'
+import { useRegister } from '../../hooks/useRegister'
 
-export const Register = () => {
+export const Register = ({ onChange, onSubmit, data }) => {
   return (
     <Layout>
       <Container>
@@ -17,7 +18,7 @@ export const Register = () => {
             <RegisterFormCollectionPoint />
           </TabPanel>
           <TabPanel header={USERS.USER}>
-            <RegisterFormUser />
+            <RegisterFormUser onChange={onChange} onSubmit={onSubmit} data={data}/>
           </TabPanel>
         </TabView>
       </Container>

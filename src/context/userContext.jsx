@@ -1,5 +1,9 @@
-import { useState, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import PropTypes from 'prop-types'
+
+import { toast } from 'react-hot-toast'
+
+import { getAddress } from '../services/login'
 
 export const UserContext = createContext()
 
@@ -14,6 +18,21 @@ export const UserProvider = ({ children }) => {
     loading,
     setLoading
   }
+
+  const getUserAddress = async ({ id }) => {
+    await getAddress({ id })
+      .then(({ data} ) => setUser((prevState) => ({
+        ...prevState,
+        address: data.address[0]
+      })))
+      .catch((error) =>  toast.error(error.message))
+  }
+
+  useEffect(() => {
+    if (user.login) {
+      getUserAddress({ id: user?.data?.address_id})
+    }
+  }, [user])
 
   return (
     <UserContext.Provider value={values}>

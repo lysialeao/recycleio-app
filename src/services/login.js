@@ -4,6 +4,11 @@ export const getUser = async ({ login, password, type }) => {
   const endpoint =  'login'
   const body = { login, password, type }
 
-  await API.post(endpoint, body)
+  return await API.post(endpoint, body)
+}
 
+export const getAddress = async ({ id }) => {
+  const endpoint = `address/${id}`
+
+  return await API.get(endpoint)
 }
