@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom'
 
 import { Register } from './views/Register'
-import { Home } from './views/Home'
 import { Login } from './views/Login/index'
 import { LandingPage } from './views/LandingPage'
 import { FindCollectionPoint } from './views/FindCollectionPoint'
@@ -29,7 +28,6 @@ export const Routes = () => {
             <Route element={<LandingPage />} path={'/'} exact/>
             <Route element={<Login />} path={'/login'} exact/>
             <Route element={<FindCollectionPoint/>} path='/find-collection-point' exact />
-            <Route element={<Private Item={Home} />} path={'/home'} exact/>
             <Route element={<Private Item={Profile} />} path={'/profile'} exact/>
             <Route element={<Register />} path='/register' exact />
          </Router>
