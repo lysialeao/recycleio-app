@@ -1,4 +1,5 @@
 import { Layout } from "../../components/Layout"
+import { ListCollectionPoints } from '../../components/ListCollectionPoints/index'
 import { Container } from "./styles"
 
 export const FindCollectionPoint = () => {
@@ -6,7 +7,7 @@ export const FindCollectionPoint = () => {
   return (
     <Layout>
       <Container>
-        <p>find collection point</p>
+        <ListCollectionPoints />
       </Container>
     </Layout>
   )
