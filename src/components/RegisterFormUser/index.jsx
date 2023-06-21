@@ -4,11 +4,15 @@ import { Accordion, AccordionTab } from 'primereact/accordion'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 
+import { AddressForm } from '../AddressForm'
+
+import { InputCPF } from '../InputCPF'
+
 import { FORM } from '../../constants/form'
 
 import { Row, ContentButton } from './styles'
 
-export const RegisterFormUser = ({ onChange, onSubmit, loading }) => {
+export const RegisterFormUser = ({ onChange, onSubmit, loading, data }) => {
   return (
     <form onSubmit={onSubmit}>
       <Accordion activeIndex={0}>
@@ -27,18 +31,12 @@ export const RegisterFormUser = ({ onChange, onSubmit, loading }) => {
               <label htmlFor="email">E-mail</label>
             </span>
             <span className="p-float-label">
-              <InputText type='text' id="cpf" onChange={(event) => onChange({ id: 'cpf', value: event.target.value })} required />
-              <label htmlFor="cpf">CPF</label>
+              <InputCPF value={data?.cpf} type='text' id="cpf" onChange={(event) => onChange({ id: 'cpf', value: event.target.value })} required />
             </span>
           </Row>
         </AccordionTab>
         <AccordionTab header="Endereço">
-          <p className="m-0">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-            sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-            Consectetur, adipisci velit, sed quia non numquam eius modi.
-          </p>
+          <AddressForm />
         </AccordionTab>
       </Accordion>
       <ContentButton>
@@ -51,5 +49,6 @@ export const RegisterFormUser = ({ onChange, onSubmit, loading }) => {
 RegisterFormUser.propTypes = {
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  data: PropTypes.object
 }
