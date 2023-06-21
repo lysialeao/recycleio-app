@@ -3,6 +3,8 @@ import { useState, useContext } from 'react'
 import { Dropdown } from 'primereact/dropdown'
 import { UserContext } from '../../context/userContext'
 
+import { FORM } from '../../constants/form'
+
 export const LocationFilter = () => {
   const [location, setLocation] = useState()
 
@@ -22,7 +24,7 @@ export const LocationFilter = () => {
         onChange={(e) => setLocation(e.value)}
         options={user.login && userLocations}
         optionLabel="name"
-        editable placeholder="Selecione sua localização"
+        editable placeholder={FORM.ENTRY_LOCATION}
         className="w-full md:w-14rem"
         maxLength={8}
       />

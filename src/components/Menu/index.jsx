@@ -8,8 +8,6 @@ import { Button } from 'primereact/button';
 import Logo from '../../assets/logo.png'
 import { UserContext } from '../../context/userContext'
 
-import { Container } from './styles'
-
 export const Menu = () => {
   const navigate = useNavigate()
   const { user } = useContext(UserContext)
