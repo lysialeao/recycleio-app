@@ -38,9 +38,9 @@ export const useUser = () => {
           data:data.data.user[0]
         })
         toast.success(SUCCESS.WELCOME)
-        navigate('/home')
+        navigate('/profile')
       })
-      .catch((error) => error.message || toast.error(ERRORS.GENERIC))
+      .catch(({ error }) => toast.error(error || ERRORS.GENERIC))
       .finally(setLoading(false))
   }
 
