@@ -24,6 +24,15 @@ export const GlobalStyle = createGlobalStyle`
         background: ${({ theme }) => theme.color.white};
         color:  ${({ theme }) => theme.color.black};
         -web-kit-smoothing: antialiased !important;
+
+        .p-multiselect-token {
+          background: ${({ theme }) => theme.color.secondary.main} !important;
+          color: ${({ theme }) => theme.color.secondary.contrastText} !important;
+        }
+
+        .p-checkbox .p-checkbox-box.p-highlight {
+          color: ${({ theme }) => theme.color.secondary.main} !important;
+        }
     }
 
     ul {

@@ -5,6 +5,8 @@ import { UserContext } from '../../context/userContext'
 
 import { FORM } from '../../constants/form'
 
+import { Container } from './styles'
+
 export const LocationFilter = () => {
   const [location, setLocation] = useState()
 
@@ -18,7 +20,7 @@ export const LocationFilter = () => {
   ]
 
   return (
-    <div className="card flex justify-content-center">
+    <Container>
       <Dropdown
         value={location}
         onChange={(e) => setLocation(e.value)}
@@ -28,6 +30,6 @@ export const LocationFilter = () => {
         className="w-full md:w-14rem"
         maxLength={8}
       />
-    </div>
+    </Container>
 )
 }

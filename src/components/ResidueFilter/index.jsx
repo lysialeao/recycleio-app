@@ -24,7 +24,7 @@ export const ResidueFilter = () => {
         display="chip"
         placeholder="Selecione o que deseja descartar"
         maxSelectedLabels={3}
-        className="w-full md:w-20rem"
+        className="w-full md:w-100rem"
       />
     </Container>
   )
