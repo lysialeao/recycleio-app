@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { Button } from 'primereact/button'
 
 import { LocationFilter } from '../LocationFilter'
@@ -7,9 +8,9 @@ import { FORM } from '../../constants/form'
 
 import { Container, Wrapper } from './styles'
 
-export const SearchBar = () => {
+export const SearchBar = ({ onSubmit }) => {
   return (
-    <Container>
+    <Container onSubmit={onSubmit}>
         <ResidueFilter />
       <Wrapper>
         <LocationFilter />
@@ -17,4 +18,8 @@ export const SearchBar = () => {
       </Wrapper>
     </Container>
   )
+}
+
+SearchBar.propTypes = {
+  onSubmit: PropTypes.func
 }

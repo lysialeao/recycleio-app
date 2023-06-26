@@ -1,25 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useContext, useCallback} from 'react'
 
-import { Skeleton } from 'primereact/skeleton';
+import { Skeleton } from 'primereact/skeleton'
 
-import { getAllCollectionPoints } from '../../services/collectionPoints'
+import { CollectionContext } from '../../context/useCollection'
+
 import { CollectionPoint } from '../CollectionPoint'
 
 import { SearchBar } from '../SearchBar'
+import { Empty } from '../Empty'
 
 import { Container, Content } from './styles'
 
 export const ListCollectionPoints = () => {
-  const [points, setPoints] = useState([])
-  const [loading, setLoading] = useState(false)
 
-  const getCollectionPoints = async () => {
-    setLoading(true)
-    await getAllCollectionPoints()
-      .then(({ data }) => setPoints(data?.collectionPoints))
-      .catch((error) => console.error(error))
-      .finally(setLoading(false))
-  }
+  const { loading, points, handleOnSubmit } = useContext(CollectionContext)
 
   const shouldRenderList = () => {
     if(loading) {
@@ -32,7 +26,9 @@ export const ListCollectionPoints = () => {
         <Skeleton width="100%" height="300px" />
         </>
       )
-    }else{
+    }
+    if(points.length <= 0) return <Empty />
+    if(points.length >= 1) {
       return points.map((point, index) => {
         return <CollectionPoint
           key={index}
@@ -41,19 +37,16 @@ export const ListCollectionPoints = () => {
           collection_days={point.collection_days}
           telephone={point.telephone}
           email={point.email}
-          />
+        />
       })
+
     }
 
   }
 
-  useEffect(() => {
-    getCollectionPoints()
-  }, [])
-
   return (
     <Container>
-      <SearchBar />
+      <SearchBar onSubmit={(event) => handleOnSubmit(event)}/>
       <Content>
         {shouldRenderList()}
       </Content>

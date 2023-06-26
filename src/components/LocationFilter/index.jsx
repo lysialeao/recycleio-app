@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 
 import { Dropdown } from 'primereact/dropdown'
 import { UserContext } from '../../context/userContext'
@@ -6,9 +6,10 @@ import { UserContext } from '../../context/userContext'
 import { FORM } from '../../constants/form'
 
 import { Container } from './styles'
+import { CollectionContext } from '../../context/useCollection'
 
 export const LocationFilter = () => {
-  const [location, setLocation] = useState()
+  const { location, setLocation } = useContext(CollectionContext)
 
   const { user } = useContext(UserContext)
 
@@ -28,7 +29,7 @@ export const LocationFilter = () => {
         optionLabel="name"
         editable placeholder={FORM.ENTRY_LOCATION}
         className="w-full md:w-14rem"
-        maxLength={8}
+        maxLength={9}
       />
     </Container>
 )
