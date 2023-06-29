@@ -18,6 +18,11 @@ export const Menu = () => {
       command: () => navigate('/find-collection-point')
     },
     {
+      label: 'Gerencie resíduos',
+      icon: 'pi pi-fw pi-cog',
+      command: () => navigate('/waste-manager')
+    },
+    {
       label: 'Perfil',
       icon: 'pi pi-fw pi-user',
       command: () => navigate('/profile')
@@ -33,10 +38,13 @@ export const Menu = () => {
   const start = <a href='/'><img alt="logo" src={Logo}  height="40" className="mr-2"></img></a>;
   const end = user.login ? <Button label='Sair' icon='pi pi-fw pi-sign-out' severity="danger" onClick={() => navigate('/')} text/> : <Button label='Login' icon='pi pi-fw pi-sign-in' severity="success" onClick={() => navigate('/login')} text/>
 
+  const models = user.login? userItems : items
+
+
   return (
       <div className="card">
         <Menubar
-          model={user.login ? userItems : items}
+          model={models}
           start={start}
           className="p-menu-end"
           end={end}
