@@ -1,12 +1,40 @@
 
+import { useContext, useState } from 'react'
+
+import { Button } from 'primereact/button'
+import { Dropdown } from 'primereact/dropdown'
+
 import { Layout } from '../../components/Layout'
-import { Container } from './styles'
+import { WasteContext } from '../../context/useWaste'
+import { WasteTable } from '../../components/WasteTable'
+
+import { Container, Bar } from './styles'
+
 
 export const WasteManager = () => {
+  const { wastes } = useContext(WasteContext)
+  const [ wasteSelected, setWasteSelected ] = useState('')
   return (
     <Layout>
       <Container>
-        gerenciador de resíduos
+        <Bar>
+          <Dropdown
+            value={wasteSelected}
+            onChange={(e) => setWasteSelected (e.value)}
+            options={wastes}
+            optionLabel="name"
+            placeholder="Selecione um novo resíduo para coletar"
+            className="w-full md:w-14rem"
+          />
+          <Button
+            label={'Adicionar resíduo'}
+            icon="pi pi-fw pi-search-plus"
+            iconPos="right"
+            severity="success"
+            width='auto'
+          />
+        </Bar>
+        <WasteTable />
       </Container>
     </Layout>
   )
