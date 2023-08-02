@@ -32,7 +32,7 @@ export const UserProvider = ({ children }) => {
     if (user.login) {
       getUserAddress({ id: user?.data?.address_id})
     }
-  }, [user])
+  }, [user.login])
 
   return (
     <UserContext.Provider value={values}>

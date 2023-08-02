@@ -11,3 +11,15 @@ export const getAllWaste = async () => {
 
   return await API.get(endpoint)
 }
+
+export const insertWaste = async ({ collection_point_id, waste_id }) => {
+
+  const body = {
+    collection_point_id,
+    waste_id
+  }
+
+  const endpoint = 'waste/point'
+
+  return API.post(endpoint, body)
+}

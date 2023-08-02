@@ -12,12 +12,12 @@ import { Container, Bar } from './styles'
 
 
 export const WasteManager = () => {
-  const { wastes } = useContext(WasteContext)
+  const { wastes, addWaste } = useContext(WasteContext)
   const [ wasteSelected, setWasteSelected ] = useState('')
   return (
     <Layout>
       <Container>
-        <Bar>
+        <Bar >
           <Dropdown
             value={wasteSelected}
             onChange={(e) => setWasteSelected (e.value)}
@@ -25,6 +25,7 @@ export const WasteManager = () => {
             optionLabel="name"
             placeholder="Selecione um novo resíduo para coletar"
             className="w-full md:w-14rem"
+            name={'name'}
           />
           <Button
             label={'Adicionar resíduo'}
@@ -32,6 +33,7 @@ export const WasteManager = () => {
             iconPos="right"
             severity="success"
             width='auto'
+            onClick={() => addWaste({ waste: wasteSelected })}
           />
         </Bar>
         <WasteTable />

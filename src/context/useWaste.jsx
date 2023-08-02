@@ -5,7 +5,8 @@ import { toast } from 'react-hot-toast'
 
 import { UserContext } from './userContext'
 
-import { getWasteByCollectionPoint, getAllWaste } from '../services/waste'
+import { getWasteByCollectionPoint, getAllWaste, insertWaste} from '../services/waste'
+import { SUCCESS } from '../constants/success'
 
 export const WasteContext = createContext()
 
@@ -32,19 +33,39 @@ export const WasteProvider = ({ children }) => {
       .finally(setLoading(false))
   }
 
+  const formatWastes = ({ wastes }) => {
+
+    setWastes(wastes)
+    userWastes && console.log(userWastes)
+  }
+
   const getAll = async () => {
     setLoading(true)
     await getAllWaste()
-      .then(({ data }) => setWastes(data?.waste))
+      .then(({ data }) => formatWastes({ wastes : data?.waste }))
       .catch(({ error }) => toast.error(error))
       .finally(setLoading(false))
+  }
+
+  const addWaste = async ({ waste }) => {
+    setLoading(true)
+    await insertWaste({ collection_point_id: user?.data.cnpj, waste_id: waste?.id })
+      .then(() => {
+        toast.success(SUCCESS.INSERTED_WASTE)
+        userWastes.push(waste)
+      })
+      .catch(({ error }) => toast.error(error))
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   const values = {
     loading,
     wastes,
     userWastes,
-    userWastesFormatted
+    userWastesFormatted,
+    addWaste
   }
 
   useEffect(() => {
@@ -55,7 +76,7 @@ export const WasteProvider = ({ children }) => {
     getWasteByPoint({ collection_point_id: `${cnpj}` })
     const wastesFormatted = userWastes && wastes && UserWastes()
     setUserWastesFormatted(wastesFormatted)
-  }, [user])
+  }, [user, userWastes])
 
   return (
     <WasteContext.Provider value={values}>
