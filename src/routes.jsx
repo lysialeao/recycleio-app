@@ -8,6 +8,8 @@ import { Register } from './views/Register'
 import { Login } from './views/Login/index'
 import { LandingPage } from './views/LandingPage'
 import { WasteManager } from './views/WasteManager'
+import { CollectionManeger } from './views/CollectionManager'
+import { ScheduleCollection } from './views/ScheduleCollection'
 import { FindCollectionPoint } from './views/FindCollectionPoint'
 
 export const Routes = () => {
@@ -26,8 +28,10 @@ export const Routes = () => {
             <Route element={<LandingPage />} path={'/'} exact/>
             <Route element={<Login />} path={'/login'} exact/>
             <Route element={<FindCollectionPoint/>} path='/find-collection-point' exact />
+            <Route element={<ScheduleCollection/>} path='/collection-point/:id' exact />
             <Route element={<Private Item={Profile} />} path={'/profile'} exact/>
             <Route element={<Private Item={WasteManager} />} path={'/waste-manager'} exact/>
+            <Route element={<Private Item={CollectionManeger} />} path={'/collection-manager'} exact/>
             <Route element={<Register />} path='/register' exact />
          </Router>
       </BrowserRouter>
