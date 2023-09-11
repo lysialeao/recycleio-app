@@ -32,8 +32,6 @@ export const ScheduleCollection = () => {
     }
   })
 
-  console.log(point)
-
   return (
     <Layout>
       <Container>

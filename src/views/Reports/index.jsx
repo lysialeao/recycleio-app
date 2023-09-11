@@ -1,17 +1,31 @@
-import * as d3 from "d3";
-import { useState } from "react";
+import { useState, useContext } from 'react'
+import * as d3 from 'd3'
 
-import { Layout } from "../../components/Layout"
-import LinePlot from "../../components/LinePlot"
-import { Container, Content, WrapperRow, Card } from "./styles"
+import { UserContext } from '../../context/userContext'
+
+import { useReports } from '../../hooks/useReports'
+
+import { Layout } from '../../components/Layout'
+import LinePlot from '../../components/LinePlot'
+
+import { Container, Content, WrapperRow, Card } from './styles'
+
 
 export const Reports = () => {
-  const [data, setData] = useState(() => d3.ticks(-2, 2, 200).map(Math.sin));
+  const { user } = useContext(UserContext)
+  const { cnpj } = user?.data || undefined
+
+  const { reports } = useReports({ id: cnpj })
+  const { total_records, total_weight } = reports || 0
+  const [data, setData] = useState(() => d3.ticks(-2, 2, 200).map(Math.sin))
+
+  console.log(reports)
 
   function onMouseMove(event) {
     const [x, y] = d3.pointer(event);
     setData(data.slice(-200).concat(Math.atan2(x, y)));
   }
+
   return (
     <Layout  onMouseMove={onMouseMove}>
       <Container>
@@ -20,11 +34,11 @@ export const Reports = () => {
           <WrapperRow>
             <Card>
               <div>Total de coletas realizadas</div>
-              <div><h2>56</h2></div>
+              <div><h2>{total_records+` Kg `}</h2></div>
             </Card>
             <Card>
               <div>Total de resíudos coletados (em kg)</div>
-              <div><h2>36kg</h2></div>
+              <div><h2>{total_weight+` Kg `}</h2></div>
             </Card>
           </WrapperRow>
           <h2>Resíduos coletados</h2>
