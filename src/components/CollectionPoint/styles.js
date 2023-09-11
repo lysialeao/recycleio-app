@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 100%;
-  height: 350px;
+  height: auto;
   border-radius: 10px;
   -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
   box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
@@ -22,7 +22,13 @@ export const Header = styled.header`
 export const Informations = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   padding: 10px;
   gap: 10px;
+`
+export const WrapperTags = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: ${({ theme }) => theme.gap.small};
 `

@@ -13,7 +13,7 @@ export const SearchBar = ({ onSubmit }) => {
     <Container onSubmit={onSubmit}>
         <ResidueFilter />
       <Wrapper>
-        <LocationFilter />
+        {/* <LocationFilter /> */}
         <Button label={FORM.FIND_POINTS} icon="pi pi-fw pi-search-plus" iconPos="right" severity="success" />
       </Wrapper>
     </Container>

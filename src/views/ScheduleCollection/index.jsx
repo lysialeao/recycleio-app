@@ -14,7 +14,7 @@ import { useCollectionPoint } from "../../hooks/useCollectionPoint"
 import { CollectionContext } from "../../context/useCollection"
 import { UserContext } from "../../context/userContext"
 
-import { Container, Header, Wrapper } from "./styles"
+import { Container, Header, Wrapper, Content, ProfilePoint } from "./styles"
 
 export const ScheduleCollection = () => {
   const { id } = useParams()
@@ -32,12 +32,18 @@ export const ScheduleCollection = () => {
     }
   })
 
+  console.log(point)
+
   return (
     <Layout>
       <Container>
         <Header />
+        <Content>
+          <ProfilePoint>
+            <h1>{point[0]?.trade_name}</h1>
+          </ProfilePoint>
+        </Content>
         <Wrapper>
-          <p>Rápido e fácil, agende sua coleta agora</p>
           <MultiSelect
             value={residues}
             onChange={(event) => setResidues(event.value)}
@@ -53,13 +59,13 @@ export const ScheduleCollection = () => {
             onChange={(e) => setDay(e.value)}
             showIcon
           />
-        </Wrapper>
         <Button
           label={FORM.SCHEDULE_COLLECTION}
           severity='warning'
           onClick={() => handleOnScheduleCollection({ day, residues, cnpj: id, cpf: user?.data?.cpf})}
           disabled={!user?.login}
         />
+        </Wrapper>
       </Container>
     </Layout>
   )

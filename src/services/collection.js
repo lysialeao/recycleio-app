@@ -18,3 +18,28 @@ export const postCollection = async ({
 
   return await API.post(endpoint, body)
 }
+
+export const getCollectionsByCnpj = async ({ id }) => {
+
+  const endpoint = `collection/point/${id}`
+
+  return await API.get(endpoint)
+}
+
+export const getCollectionsByCpf = async ({ id }) => {
+
+  const endpoint = `collection/user/${id}`
+
+  return await API.get(endpoint)
+}
+
+export const updateCollection = async ({ id, weight, status }) => {
+  const endpoint = `collection/${id}`
+
+  const body = {
+    weight: weight ?  weight : 0,
+    status
+  }
+
+  return await API.patch(endpoint, body)
+}

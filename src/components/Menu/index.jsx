@@ -23,6 +23,16 @@ export const Menu = () => {
       command: () => navigate('/waste-manager')
     },
     {
+      label: 'Coletas',
+      icon: 'pi pi-fw pi-cog',
+      command: () => navigate('/collection-manager')
+    },
+    {
+      label: 'Relatórios',
+      icon: 'pi pi-fw pi-cog',
+      command: () => navigate('/reports')
+    },
+    {
       label: 'Perfil',
       icon: 'pi pi-fw pi-user',
       command: () => navigate('/profile')

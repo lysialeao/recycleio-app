@@ -76,7 +76,7 @@ export const WasteProvider = ({ children }) => {
     getWasteByPoint({ collection_point_id: `${cnpj}` })
     const wastesFormatted = userWastes && wastes && UserWastes()
     setUserWastesFormatted(wastesFormatted)
-  }, [user, userWastes])
+  }, [])
 
   return (
     <WasteContext.Provider value={values}>

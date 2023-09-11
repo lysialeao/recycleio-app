@@ -1,4 +1,4 @@
-import { useContext, useCallback} from 'react'
+import { useContext } from 'react'
 
 import { Skeleton } from 'primereact/skeleton'
 
@@ -32,11 +32,13 @@ export const ListCollectionPoints = () => {
       return points.map((point, index) => {
         return <CollectionPoint
           key={index}
+          cnpj={point.cnpj}
           corporate_name={point.corporate_name}
           trade_name={point.trade_name}
           collection_days={point.collection_days}
           telephone={point.telephone}
           email={point.email}
+          wastes={point.wastes}
         />
       })
 

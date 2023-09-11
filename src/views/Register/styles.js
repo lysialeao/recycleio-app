@@ -17,4 +17,5 @@ export const Container = styled.div`
   .p-tabview .p-tabview-nav .p-tabview-ink-bar {
     background-color: ${({ theme }) => theme.color.secondary.main};
   }
+
 `

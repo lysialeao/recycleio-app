@@ -9,7 +9,7 @@ export const UserContext = createContext()
 
 export const UserProvider = ({ children }) => {
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({ login: false })
   const [loading, setLoading] = useState(false)
 
   const values = {

@@ -11,6 +11,7 @@ import { WasteManager } from './views/WasteManager'
 import { CollectionManeger } from './views/CollectionManager'
 import { ScheduleCollection } from './views/ScheduleCollection'
 import { FindCollectionPoint } from './views/FindCollectionPoint'
+import { Reports } from './views/Reports'
 
 export const Routes = () => {
 
@@ -32,6 +33,7 @@ export const Routes = () => {
             <Route element={<Private Item={Profile} />} path={'/profile'} exact/>
             <Route element={<Private Item={WasteManager} />} path={'/waste-manager'} exact/>
             <Route element={<Private Item={CollectionManeger} />} path={'/collection-manager'} exact/>
+            <Route element={<Private Item={Reports} />} path={'/reports'} exact/>
             <Route element={<Register />} path='/register' exact />
          </Router>
       </BrowserRouter>

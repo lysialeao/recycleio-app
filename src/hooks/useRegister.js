@@ -9,7 +9,6 @@ export const useRegister = () => {
   const [address, setAddres] = useState({})
 
   const onChangeAddress = async ({ id, value }) => {
-    console.log(id, value)
     if (id === 'zip_code' && value.length === 8) {
       await VIACEP.get(`/${value}/json`)
         .then(({ data }) => setAddres((prevState) => ({
@@ -39,7 +38,6 @@ export const useRegister = () => {
 
   const onSubmit = (event) => {
     event.preventDefault()
-    console.log(data, address)
   }
 
   return {

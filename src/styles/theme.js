@@ -11,12 +11,16 @@ export const Theme = {
     black: "#281f27",
     gray: "#665b65",
     white: "#fcfbfc",
-    lightGray: '#d3d3d3'
+    lightGray: '#d3d3d3',
+    lightGreen: '#cbf7c7'
   },
   padding: {
     small: "12px",
     medium: "24px",
     large: "48px",
     xlarge: "96px"
+  },
+  gap: {
+    small: '4px'
   }
 }

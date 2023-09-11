@@ -2,6 +2,9 @@ import { useState, useEffect, createContext } from 'react'
 import PropTypes from 'prop-types'
 
 import { getAllCollectionPoints, getCollectionPointsByZipCode } from '../services/collectionPoints'
+import { getWasteByCollectionPoint } from '../services/waste'
+import { postCollection } from '../services/collection'
+import { toast } from 'react-hot-toast'
 
 export const CollectionContext = createContext()
 
@@ -10,11 +13,28 @@ export const CollectionProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
   const [points, setPoints] = useState([])
   const [location, setLocation] = useState('')
+  const [visible, setVisible] = useState(false)
+
+  const getWastesByPoints = async (point) => {
+    const cnpj = point?.cnpj
+    await getWasteByCollectionPoint({ collection_point_id: cnpj })
+      .then(({ data }) =>
+        setPoints([
+          {
+            ...point,
+            wastes: data?.wasteByCollectionPoint
+          }
+        ])
+      )
+      .catch((error) => console.error(error))
+      .finally(setLoading(false))
+  }
 
   const getCollectionPoints = async () => {
     setLoading(true)
     await getAllCollectionPoints()
-      .then(({ data }) => setPoints(data?.collectionPoints))
+      .then(({ data }) => data?.collectionPoints.map((point) => getWastesByPoints(point)))
+      // setPoints(data?.collectionPoints))
       .catch((error) => console.error(error))
       .finally(setLoading(false))
   }
@@ -32,6 +52,25 @@ export const CollectionProvider = ({ children }) => {
     getCollectionPointsZipCode({ location })
   }
 
+  const handleOnScheduleCollection = async({ day, residues, cnpj, cpf }) => {
+    event.preventDefault()
+    setLoading(true)
+
+    const residuesToCollection = residues.map((residue) => {
+      return residue.code
+    })
+
+    await postCollection({
+        user_id: cpf,
+        collection_point_id: cnpj,
+        date_time: day,
+        waste_id: residuesToCollection
+      })
+      .then(toast.success('Coleta agendada!'))
+      .catch((error) => console.error(error))
+      .finally(setLoading(false))
+  }
+
   useEffect(() => {
     getCollectionPoints()
   }, [])
@@ -43,7 +82,10 @@ export const CollectionProvider = ({ children }) => {
     setPoints,
     location,
     setLocation,
-    handleOnSubmit
+    handleOnSubmit,
+    handleOnScheduleCollection,
+    visible,
+    setVisible
   }
 
   return (
