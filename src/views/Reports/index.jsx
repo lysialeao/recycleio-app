@@ -15,11 +15,9 @@ export const Reports = () => {
   const { user } = useContext(UserContext)
   const { cnpj } = user?.data || undefined
 
-  const { reports } = useReports({ id: cnpj })
+  const { reports, residues } = useReports({ id: cnpj })
   const { total_records, total_weight } = reports || 0
   const [data, setData] = useState(() => d3.ticks(-2, 2, 200).map(Math.sin))
-
-  console.log(reports)
 
   function onMouseMove(event) {
     const [x, y] = d3.pointer(event);
@@ -43,18 +41,15 @@ export const Reports = () => {
           </WrapperRow>
           <h2>Resíduos coletados</h2>
           <WrapperRow>
-          <Card>
-              <div>Vidro</div>
-              <div><h2>36kg</h2></div>
-            </Card>
-            <Card>
-              <div>Papel</div>
-              <div><h2>36kg</h2></div>
-            </Card>
-            <Card>
-              <div>Plástico</div>
-              <div><h2>36kg</h2></div>
-            </Card>
+            { residues && residues.map((residue, index) => {
+              return (
+                <Card key={index}>
+                  <div>{residue.name}</div>
+                  <div><h2>{residue.count+ ``}</h2></div>
+                 </Card>
+              )
+            })}
+
           </WrapperRow>
           <h2>Estatícticas</h2>
           <LinePlot data={data}/>
