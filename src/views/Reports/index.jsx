@@ -1,12 +1,11 @@
-import { useState, useContext } from 'react'
-import * as d3 from 'd3'
+import { useContext } from 'react'
 
 import { UserContext } from '../../context/userContext'
 
 import { useReports } from '../../hooks/useReports'
 
 import { Layout } from '../../components/Layout'
-import LinePlot from '../../components/LinePlot'
+import { LineChart } from '../../components/LineChart'
 
 import { Container, Content, WrapperRow, Card } from './styles'
 
@@ -17,15 +16,9 @@ export const Reports = () => {
 
   const { reports, residues } = useReports({ id: cnpj })
   const { total_records, total_weight } = reports || 0
-  const [data, setData] = useState(() => d3.ticks(-2, 2, 200).map(Math.sin))
-
-  function onMouseMove(event) {
-    const [x, y] = d3.pointer(event);
-    setData(data.slice(-200).concat(Math.atan2(x, y)));
-  }
 
   return (
-    <Layout  onMouseMove={onMouseMove}>
+    <Layout>
       <Container>
         <Content>
           <h1>Relatórios</h1>
@@ -52,7 +45,7 @@ export const Reports = () => {
 
           </WrapperRow>
           <h2>Estatícticas</h2>
-          <LinePlot data={data}/>
+          { residues && <LineChart data={residues}/> }
         </Content>
       </Container>
     </Layout>
