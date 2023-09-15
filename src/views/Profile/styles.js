@@ -4,7 +4,7 @@ import logo from '../../assets/logo.png'
 
 export const Container = styled.div`
   widht: 100%;
-  height: 100%;
+  height: auto;
 
   display: flex;
   flex-direction: row;
@@ -17,7 +17,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   border-radius: 10px;
   -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
   box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
@@ -54,7 +54,6 @@ export const Avatar = styled.div`
 
   box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
   -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
-
 `
 
 export const Information = styled.div`

@@ -14,7 +14,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  height: 1200px;
+  height: auto;
 
   display: flex;
   flex-direction: column;
@@ -26,9 +26,6 @@ export const Content = styled.div`
   padding: ${({ theme }) => theme.padding.large};
   gap: ${({ theme }) => theme.padding.medium};
 
-  h1 {
-    color: ${({ theme }) => theme.color.primary.main};
-  }
 `
 
 export const WrapperRow = styled.div`
@@ -37,6 +34,11 @@ export const WrapperRow = styled.div`
 
   display: flex;
   flex-direction: row;
+
+  @media(max-width: 768px) {
+    flex-wrap: wrap;
+  }
+
   gap: ${({ theme }) => theme.padding.medium};
 `
 
