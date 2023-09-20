@@ -13,9 +13,9 @@ import { Empty } from '../../components/Empty'
 
 export const Reports = () => {
   const { user } = useContext(UserContext)
-  const { cnpj } = user?.data || undefined
+  const { cnpj, cpf } = user?.data || undefined
 
-  const { reports, residues, fetchReportsWithInterval } = useReports({ id: cnpj })
+  const { reports, residues, fetchReportsWithInterval } = useReports({ cnpj, cpf})
   const { total_records, total_weight } = reports || 0
 
   return (
