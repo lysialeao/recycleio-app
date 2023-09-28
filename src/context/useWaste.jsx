@@ -75,7 +75,7 @@ export const WasteProvider = ({ children }) => {
   useEffect(() => {
     getWasteByPoint({ collection_point_id: `${cnpj}` })
     const wastesFormatted = userWastes && wastes && UserWastes()
-    console.log(wastesFormatted)
+    // console.log(wastesFormatted)
     setUserWastesFormatted(wastesFormatted)
   }, [cnpj, userWastes])
 

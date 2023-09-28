@@ -1,33 +1,16 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import { redirect } from "react-router-dom";
 
-import { VIACEP } from '../api/viacep'
+import { insertUser } from '../services/register'
 
 export const useRegister = () => {
-  const [data, setData] = useState({
-    cpf: ''
-  })
-  const [address, setAddres] = useState({})
+  const [data, setData] = useState({})
+  const [loading, setLoading] = useState(null)
+  const toast = useRef(null);
 
-  const onChangeAddress = async ({ id, value }) => {
-    if (id === 'zip_code' && value.length === 8) {
-      await VIACEP.get(`/${value}/json`)
-        .then(({ data }) => setAddres((prevState) => ({
-          ...prevState,
-          zip_code: data?.cep,
-          state: data?.uf,
-          city: data.localidade,
-          neighborhood: data?.bairro,
-          street: data?.logradouro
-        })))
-        .catch((err) => {
-          console.error('ops! ocorreu um erro' + err)
-        })
-    }
-    return setAddres((prevState) => ({
-      ...prevState,
-      [id]: value
-    }))
-  }
+  const error = () => toast.current.show({ severity: 'warn', summary: 'Algo deu errado', detail: 'Vamos tentar novamente?', life: 3000 });
+
+  const success = () => toast.current.show({ severity: 'info', summary: 'Sucesso', detail: 'Perfil cadastrado! Faça login agora', life: 3000 });
 
   const onChange = async ({ id, value}) => {
     setData((prevState) => ({
@@ -36,8 +19,52 @@ export const useRegister = () => {
     }))
   }
 
+  const onRegisterPerson = async () => {
+
+    setLoading(true)
+
+    const { cpf, name: first_name, last_name, email, password, zip_code, state, city, neighborhood, street, number } = data 
+    
+    const body = {
+      cpf, 
+      first_name, 
+      last_name, 
+      email, 
+      password,
+      address: {
+        zip_code,
+        state,
+        city,
+        neighborhood,
+        street,
+        number
+      }
+    }
+
+    await insertUser({ body })
+      .then(() => {
+        success()
+        window.location.href='/login'
+      })
+      .catch((er) => {
+        error()
+        console.error(er)
+      })
+      .finally(setLoading(false))
+  }
+
+  const onRegisterCollectionPoint = () => {
+
+  }
+
   const onSubmit = (event) => {
     event.preventDefault()
+    const { cpf, cnpj } = data
+
+    if(cpf) return onRegisterPerson()
+    if(cnpj) return onRegisterCollectionPoint()
+
+    return 
   }
 
   return {
@@ -45,8 +72,7 @@ export const useRegister = () => {
     setData,
     onChange,
     onSubmit,
-    address,
-    setAddres,
-    onChangeAddress
+    toast,
+    loading
   }
 }

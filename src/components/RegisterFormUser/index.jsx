@@ -27,16 +27,24 @@ export const RegisterFormUser = ({ onChange, onSubmit, loading, data }) => {
               <label htmlFor="last_name">Sobrenome</label>
             </span>
             <span className="p-float-label">
-              <InputText type='email' id="email" onChange={(event) => onChange({ id: 'email', value: event.target.value })} required />
-              <label htmlFor="email">E-mail</label>
-            </span>
-            <span className="p-float-label">
               <InputCPF value={data?.cpf} type='text' id="cpf" onChange={(event) => onChange({ id: 'cpf', value: event.target.value })} required />
             </span>
           </Row>
         </AccordionTab>
         <AccordionTab header="Endereço">
-          <AddressForm />
+          <AddressForm onChange={onChange} data={data}/>
+        </AccordionTab>
+        <AccordionTab header="Dados de login">
+          <Row>
+            <span className="p-float-label">
+              <InputText type='email' id="email" onChange={(event) => onChange({ id: 'email', value: event.target.value })} required />
+              <label htmlFor="email">E-mail</label>
+            </span>
+            <span className="p-float-label">
+              <InputText value={data?.password} type='password' id="password" onChange={(event) => onChange({ id: 'password', value: event.target.value })} required />
+              <label htmlFor="email">Senha</label>
+            </span>
+          </Row>
         </AccordionTab>
       </Accordion>
       <ContentButton>

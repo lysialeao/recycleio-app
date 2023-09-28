@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 
 import { TabView, TabPanel } from 'primereact/tabview'
+import { Toast } from 'primereact/toast';
 
 import { Layout } from '../../components/Layout'
-import { Container } from './styles'
 
 import { USERS } from '../../constants/user'
 
@@ -11,12 +11,15 @@ import { RegisterFormUser } from '../../components/RegisterFormUser'
 import { RegisterFormCollectionPoint } from '../../components/RegisterFormCollectionPoint'
 import { useRegister } from '../../hooks/useRegister'
 
+import { Container } from './styles'
+
 export const Register = () => {
 
-  const { onChange, onSubmit, data } = useRegister()
+  const { onChange, onSubmit, data, toast } = useRegister()
   return (
     <Layout>
       <Container>
+        <Toast ref={toast} />
         <TabView>
           <TabPanel header={USERS.COLLECTION_POINT}>
             <RegisterFormCollectionPoint />
