@@ -72,12 +72,12 @@ export const WasteProvider = ({ children }) => {
     getAll()
   }, [])
 
-  useEffect(() => {
-    getWasteByPoint({ collection_point_id: `${cnpj}` })
-    const wastesFormatted = userWastes && wastes && UserWastes()
-    // console.log(wastesFormatted)
-    setUserWastesFormatted(wastesFormatted)
-  }, [cnpj, userWastes])
+  // useEffect(() => {
+  //   getWasteByPoint({ collection_point_id: `${cnpj}` })
+  //   const wastesFormatted = userWastes && wastes && UserWastes()
+  //   // console.log(wastesFormatted)
+  //   setUserWastesFormatted(wastesFormatted)
+  // }, [cnpj, userWastes])
 
   return (
     <WasteContext.Provider value={values}>

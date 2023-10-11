@@ -22,7 +22,7 @@ export const Register = () => {
         <Toast ref={toast} />
         <TabView>
           <TabPanel header={USERS.COLLECTION_POINT}>
-            <RegisterFormCollectionPoint />
+            <RegisterFormCollectionPoint onChange={onChange} onSubmit={onSubmit} data={data}/>
           </TabPanel>
           <TabPanel header={USERS.USER}>
             <RegisterFormUser onChange={onChange} onSubmit={onSubmit} data={data}/>

@@ -6,3 +6,10 @@ export const insertUser = async ({ body }) => {
 
     return await API.post(endpoint, body)
 }
+
+export const insertCollectionPoint = async ({ body }) => {
+    
+    const endpoint = 'points'
+
+    return await API.post(endpoint, body)
+}

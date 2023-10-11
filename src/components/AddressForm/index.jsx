@@ -8,7 +8,7 @@ export const AddressForm = ({ onChange, data }) => {
     <>
       <Row>
         <span className="p-float-label">
-          <InputText type='text' id="zip_code" onChange={(event) => onChange({ id: 'zip_code', value: event.target.value })} value={data.zip_code}required maxlength="8" minlength="8"/>
+          <InputText type='text' id="zip_code" onChange={(event) => onChange({ id: 'zip_code', value: event.target.value })} value={data.zip_code}required maxLength="8" minLength="8"/>
           <label htmlFor="zip_code">CEP</label>
         </span>
         <span className="p-float-label">

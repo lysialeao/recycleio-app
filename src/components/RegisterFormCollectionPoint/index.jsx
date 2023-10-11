@@ -1,41 +1,77 @@
 import { InputText } from 'primereact/inputtext'
-import { Password } from 'primereact/password'
-import { Container, Form, Row } from "./styles"
+import { Button } from 'primereact/button'
 import { Accordion, AccordionTab } from 'primereact/accordion'
+
+import { FORM } from '../../constants/form'
 import { AddressForm } from '../AddressForm'
 
-export const RegisterFormCollectionPoint = ({ onChange, onSubmit, loading }) => {
+import { Container, Form, Row, ContentButton } from "./styles"
+
+export const RegisterFormCollectionPoint = ({ onChange, onSubmit, loading, data }) => {
   return (
     <Container>
       <h2>Quer se tornar um ponto coletor?</h2>
       <h3>Juste se agora mesmo a uma rede de colaboradoes que ajudam com o descarte responsável do lixo</h3>
+      <Form onSubmit={onSubmit}>
       <Accordion activeIndex={0}>
       <AccordionTab header="Dados da empresa">
-      <Form>
         <Row>
       <span className="p-float-label">
-        <InputText type='email' id="login" onChange={(event) => onChange({ id: 'login', value: event.target.value })} required />
-        <label htmlFor="login">Login</label>
+        <InputText type='text' id="cnpj" onChange={(event) => onChange({ id: 'cnpj', value: event.target.value })} required />
+        <label htmlFor="cnpj">CNPJ</label>
       </span>
       <span className="p-float-label">
-        <Password id="password" onChange={(event) => onChange({ id: 'password', value: event.target.value })} required />
-        <label htmlFor="password">Senha</label>
+        <InputText type='text' id='corporate_name' onChange={(event) => onChange({ id: 'corporate_name', value: event.target.value })} required />
+        <label htmlFor="corporata_name">Razão social</label>
+      </span>
+      <span className="p-float-label">
+      <InputText type='text' id='trade_name'onChange={(event) => onChange({ id: 'trade_name', value: event.target.value })} required />
+        <label htmlFor="trade_name">Nome fantasia</label>
       </span>
       </Row>
-      </Form>
+      <Row>
+      <span className="p-float-label">
+      <InputText type='text' id='telephone'onChange={(event) => onChange({ id: 'telephone', value: event.target.value })} required />
+        <label htmlFor="telephone">Telefone</label>
+      </span>
+      <span className="p-float-label">
+      <InputText type='text' id='collection_days'onChange={(event) => onChange({ id: 'collection_days', value: event.target.value })} required />
+        <label htmlFor="collection_days">Dias de coleta</label>
+      </span>
+      </Row>
       </AccordionTab>
       <AccordionTab header="Responsável por coletas">
-        <p className="m-0">
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-          quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-          sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-          Consectetur, adipisci velit, sed quia non numquam eius modi.
-        </p>
+        <Row>
+          <span className="p-float-label">
+            <InputText type='text' id='collection_responsible_name'onChange={(event) => onChange({ id: 'collection_responsible_name', value: event.target.value })} required />
+            <label htmlFor="collection_responsible_name">Nome</label>
+          </span>
+          <span className="p-float-label">
+            <InputText type='text' id='collection_responsible_email'onChange={(event) => onChange({ id: 'collection_responsible_email', value: event.target.value })} required />
+            <label htmlFor="collection_responsible_email">E-mail</label>
+          </span>
+        </Row>
       </AccordionTab>
       <AccordionTab header="Endereço">
-        <AddressForm />
+        <AddressForm onChange={onChange} data={data}/>
       </AccordionTab>
+      <AccordionTab header="Dados de login">
+          <Row>
+            <span className="p-float-label">
+              <InputText type='email' id="email" onChange={(event) => onChange({ id: 'email', value: event.target.value })} required />
+              <label htmlFor="email">E-mail</label>
+            </span>
+            <span className="p-float-label">
+              <InputText value={data?.password} type='password' id="password" onChange={(event) => onChange({ id: 'password', value: event.target.value })} required />
+              <label htmlFor="email">Senha</label>
+            </span>
+          </Row>
+        </AccordionTab>
     </Accordion>
+    <ContentButton>
+         <Button label={FORM.REGISTER_BUTTON} className="p-button-success" loading={loading} />
+      </ContentButton>
+    </Form>
     </Container>
   )
 }
