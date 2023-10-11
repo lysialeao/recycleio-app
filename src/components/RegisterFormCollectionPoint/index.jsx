@@ -1,6 +1,10 @@
+import { useState, useEffect } from 'react'
+
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { Accordion, AccordionTab } from 'primereact/accordion'
+
+import { checkEmail } from '../../services/login'
 
 import { FORM } from '../../constants/form'
 import { AddressForm } from '../AddressForm'
@@ -8,6 +12,18 @@ import { AddressForm } from '../AddressForm'
 import { Container, Form, Row, ContentButton } from "./styles"
 
 export const RegisterFormCollectionPoint = ({ onChange, onSubmit, loading, data }) => {
+  const [emailExists, setEmailExists] = useState(false);
+  const [emailError, setEmailError] = useState('');
+
+  useEffect(() => {
+    if(data?.email) {
+      checkEmail({ email: data.email })
+        .then( ({ data }) => {
+          setEmailExists(data.emailAlreadyUsed);
+          setEmailError(data.emailAlreadyUsed ? 'Este e-mail já foi usado!' : '');
+      });
+    }
+  }, [data?.email]);
   return (
     <Container>
       <h2>Quer se tornar um ponto coletor?</h2>
@@ -60,6 +76,7 @@ export const RegisterFormCollectionPoint = ({ onChange, onSubmit, loading, data 
             <span className="p-float-label">
               <InputText type='email' id="email" onChange={(event) => onChange({ id: 'email', value: event.target.value })} required />
               <label htmlFor="email">E-mail</label>
+              { emailExists && <small id="email" className="p-error block">{emailError}</small> }
             </span>
             <span className="p-float-label">
               <InputText value={data?.password} type='password' id="password" onChange={(event) => onChange({ id: 'password', value: event.target.value })} required />

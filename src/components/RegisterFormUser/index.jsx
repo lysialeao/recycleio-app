@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import { Accordion, AccordionTab } from 'primereact/accordion'
@@ -9,10 +10,24 @@ import { AddressForm } from '../AddressForm'
 import { InputCPF } from '../InputCPF'
 
 import { FORM } from '../../constants/form'
+import { checkEmail } from '../../services/login'
 
 import { Row, ContentButton } from './styles'
 
 export const RegisterFormUser = ({ onChange, onSubmit, loading, data }) => {
+  const [emailExists, setEmailExists] = useState(false);
+  const [emailError, setEmailError] = useState('');
+
+  useEffect(() => {
+    if(data?.email) {
+      checkEmail({ email: data.email })
+        .then( ({ data }) => {
+          setEmailExists(data.emailAlreadyUsed);
+          setEmailError(data.emailAlreadyUsed ? 'Este e-mail já foi usado!' : '');
+      });
+    }
+  }, [data?.email]);
+
   return (
     <form onSubmit={onSubmit}>
       <Accordion activeIndex={0}>
@@ -36,10 +51,17 @@ export const RegisterFormUser = ({ onChange, onSubmit, loading, data }) => {
         </AccordionTab>
         <AccordionTab header="Dados de login">
           <Row>
-            <span className="p-float-label">
-              <InputText type='email' id="email" onChange={(event) => onChange({ id: 'email', value: event.target.value })} required />
-              <label htmlFor="email">E-mail</label>
-            </span>
+          <span className="p-float-label">
+          <InputText 
+            type='email' 
+            id="email" 
+            className={emailExists ? 'p-invalid' : ''} 
+            onChange={(event) => onChange({ id: 'email', value: event.target.value })} 
+            required 
+          />
+          <label htmlFor="email">E-mail</label>
+          { emailExists && <small id="email" className="p-error block">{emailError}</small> }
+        </span>
             <span className="p-float-label">
               <InputText value={data?.password} type='password' id="password" onChange={(event) => onChange({ id: 'password', value: event.target.value })} required />
               <label htmlFor="email">Senha</label>

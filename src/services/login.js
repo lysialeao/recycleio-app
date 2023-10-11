@@ -12,3 +12,9 @@ export const getAddress = async ({ id }) => {
 
   return await API.get(endpoint)
 }
+
+export const checkEmail = async ({ email }) => {
+  const endpoint = 'checkemail'
+
+  return await API.post(endpoint, { email })
+}

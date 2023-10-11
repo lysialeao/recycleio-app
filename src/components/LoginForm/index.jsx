@@ -18,9 +18,9 @@ export const LoginForm = ({ onChange, onSubmit, loading }) => {
         <Password id="password" onChange={(event) => onChange({ id: 'password', value: event.target.value })} required />
         <label htmlFor="password">Senha</label>
       </span>
-      <div className="card flex justify-content-center">
+      {/* <div className="card flex justify-content-center">
         <SelectButton value={'type'} onChange={(event) => onChange({ id: 'type', value: event.value })} options={['cnpj', 'cpf']} required />
-      </div>
+      </div> */}
       <Button label="Login" className="p-button-success" loading={loading} />
       <p>Não tem uma conta? <a href='/register'>registre-se</a></p>
     </Form>
