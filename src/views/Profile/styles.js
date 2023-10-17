@@ -12,7 +12,6 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  padding: ${({ theme }) => theme.padding.xlarge};
 `
 
 export const Content = styled.div`

@@ -10,6 +10,10 @@ export const Container = styled.div`
   gap: ${({ theme }) => theme.padding.large};
   padding: ${({ theme }) => theme.padding.large};
 
+  border-radius: 10px;
+  -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
+  box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
+
 `
 
 export const Bar = styled.nav`

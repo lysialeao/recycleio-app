@@ -2,16 +2,28 @@ import styled from "styled-components"
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vw;
 
   display: flex;
   flex-direction: column;
 
-  align-items: center;
-  justify-content: center;
+  border-radius: 10px;
+  -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
+  box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
 
+  // align-items: center;
+  // justify-content: center;
+
+  `
+  
+  export const Banner = styled.div`
+  width: 100%;
+  height: 50vw;;
   background-image: url('https://cdn.dribbble.com/userupload/2919966/file/original-2a080412ff0831144d09c7c7f0fa87b1.png?compress=1&resize=1024x767');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  border-radius: 10px;
+  background-attachment: fixed;
+
 `

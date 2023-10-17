@@ -1,65 +1,57 @@
+import { useContext, useState, useEffect } from 'react'
+import { useNavigate, NavLink } from 'react-router-dom'
 
-import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-
-import { Menubar } from 'primereact/menubar'
-import { Button } from 'primereact/button';
-
-import Logo from '../../assets/logo.png'
 import { UserContext } from '../../context/userContext'
 
+import { Container, Content } from './styles'
+
+import { userItems, collectionPointItems, notLoggedItems } from '../../constants/menu'
+
 export const Menu = () => {
-  const navigate = useNavigate()
+  const [items, setItems] = useState([])
+
   const { user } = useContext(UserContext)
-  const userItems = [
-    {
-      label: 'Ache um ponto de coleta',
-      icon: 'pi pi-fw pi-search-plus',
-      command: () => navigate('/find-collection-point')
-    },
-    {
-      label: 'Gerencie resíduos',
-      icon: 'pi pi-fw pi-cog',
-      command: () => navigate('/waste-manager')
-    },
-    {
-      label: 'Coletas',
-      icon: 'pi pi-fw pi-cog',
-      command: () => navigate('/collection-manager')
-    },
-    {
-      label: 'Relatórios',
-      icon: 'pi pi-fw pi-cog',
-      command: () => navigate('/reports')
-    },
-    {
-      label: 'Perfil',
-      icon: 'pi pi-fw pi-user',
-      command: () => navigate('/profile')
-    }
-  ]
-  const items = [
-    {
-      label: 'Ache um ponto de coleta',
-      icon: 'pi pi-fw pi-search-plus',
-      command: () => navigate('/find-collection-point')
-    }
-  ]
-  const start = <a href='/'><img alt="logo" src={Logo}  height="40" className="mr-2"></img></a>;
-  const end = user.login ? <Button label='Sair' icon='pi pi-fw pi-sign-out' severity="danger" onClick={() => navigate('/')} text/> : <Button label='Login' icon='pi pi-fw pi-sign-in' severity="success" onClick={() => navigate('/login')} text/>
 
-  const models = user.login? userItems : items
+  const { login, data } = user || false
 
+  const getItems = () => {
+    let items
+
+    if(login) {
+      if (data.cnpj) items = collectionPointItems
+      if(data.cpf) items = userItems
+    }else {
+      items = notLoggedItems
+    }
+
+    return setItems(items)
+  }
+ 
+  useEffect(() => {
+    getItems()
+  }, [login])
 
   return (
-      <div className="card">
-        <Menubar
-          model={models}
-          start={start}
-          className="p-menu-end"
-          end={end}
-          style={{ display: 'flex', justifyContent: 'flex-end' }}
-        />
-      </div>
+    <Container>
+      <NavLink to='/'>
+        recycleio
+      </NavLink>
+      <Content>
+        { items?.map((item) => {
+          return (
+            <NavLink to={item.route}
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? 'solid 1px' : 'none'
+                }
+              }}
+            >
+              {item.label}
+            </NavLink>
+          )
+        })}
+       </Content>
+    </Container>
   )
 }

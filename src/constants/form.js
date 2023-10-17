@@ -6,5 +6,9 @@ export const FORM = {
   SEARCH: 'Pesquisar...',
   FIND_POINTS: 'Achar pontos de coleta!',
   SCHEDULE_COLLECTION: 'Agendar uma coleta',
-  SELECT_RESIDUES: 'Selecione os resíduos que deseja descartar'
+  SELECT_RESIDUES: 'Selecione os resíduos que deseja descartar',
+  LOGIN: 'Login',
+  PASSWORD: 'Senha',
+  NOT_REGISTER: 'Não tem uma conta?',
+  SIGNIN: 'registre-se'
 }

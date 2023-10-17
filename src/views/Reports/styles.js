@@ -7,9 +7,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  // gap: ${({ theme }) => theme.padding.large};
-  padding: ${({ theme }) => theme.padding.large};
-
 `
 
 export const Content = styled.div`
