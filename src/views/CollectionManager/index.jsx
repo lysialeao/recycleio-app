@@ -32,8 +32,7 @@ export const CollectionManeger = () => {
   const tempId = useRef(null);
 
   const accept = useCallback(() => {
-    console.log(weight);
-    updateCollection({ id: tempId.current, weight: weight, status: status.code })
+    updateCollection({ id: tempId.current, weight, status: status.code })
       .then(() => {
         toast.current.show({ severity: 'info', summary: 'Sucesso', detail: 'Coleta atualizada!', life: 3000 });
         setUpdate(true)
@@ -45,18 +44,22 @@ export const CollectionManeger = () => {
       });
   }, [weight, status]);
 
-
-
   const reject = useCallback(() => {
     toast.current.show({ severity: 'warn', summary: 'Algo deu errado', detail: 'Vamos tentar novamente?', life: 3000 });
     setDisplayDialog(false);
   }, []);
 
+  const cancel = useCallback(() => {
+    toast.current.show({ severity: 'warn', summary: 'Ação cancelada', detail: 'Você pode atualizar esta coleta quando quiser!', life: 3000 });
+    setDisplayDialog(false);
+  }, []);
+
+
   const renderFooter = useCallback(() => {
     return (
       <div>
-        <Button label="Rejeitar" icon="pi pi-times" onClick={reject} className="p-button-text" />
-        <Button label="Aceitar" icon="pi pi-check" onClick={accept} autoFocus />
+        <Button label="Cancelar" severity="secondary" icon="pi pi-times" onClick={cancel} className="p-button-text" />
+        <Button label="Atualizar coleta" severity="success" icon="pi pi-check" onClick={accept} autoFocus />
       </div>
     );
   }, [accept, reject]);
@@ -68,10 +71,15 @@ export const CollectionManeger = () => {
 }, []);
 
   const renderButton = (rowData) => {
-    return (
-        <Button onClick={() => openDialog(rowData)} icon="pi pi-check" label={rowData.collection_status} className="mr-2"></Button>
-    );
-};
+    return <Button 
+      onClick={() => openDialog(rowData)} 
+      icon="pi pi-check" 
+      label={rowData.collection_status} 
+      className="mr-2" 
+      severity="success"
+      disabled={rowData.collection_status==='COMPLETED' ? true : false} 
+    />
+  };
 
   return (
     <Layout>
@@ -90,7 +98,7 @@ export const CollectionManeger = () => {
           <Form>
             <Dropdown value={status} onChange={(e) => setStatus(e.value)} options={optionsStatus} optionLabel="name" placeholder="Selecione o status" className="w-full md:w-14rem" />
             <label htmlFor="username">Peso</label>
-            <InputText id="username" aria-describedby="username-help" value={weight} onChange={(e) => setWeight(e.value)} />
+            <InputText id="username" aria-describedby="username-help" value={weight} onChange={(e) => setWeight(e.target.value)} />
             <small id="username-help">
               Digite o peso total dos resíduos que foram coletados.
             </small>

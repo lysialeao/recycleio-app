@@ -37,7 +37,7 @@ export const updateCollection = async ({ id, weight, status }) => {
   const endpoint = `collection/${id}`
 
   const body = {
-    weight: weight ?  weight : 0,
+    weight,
     status
   }
 
