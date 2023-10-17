@@ -14,7 +14,7 @@ import { UserContext } from "../../context/userContext"
 import { useCollection } from "../../hooks/useCollection"
 
 import { Container, Form } from "./styles"
-import { optionsStatus } from "../../enum/status";
+import { optionsStatus, collectionStatus } from "../../enum/status";
 import { updateCollection } from "../../services/collection";
 
 export const CollectionManeger = () => {
@@ -74,7 +74,7 @@ export const CollectionManeger = () => {
     return <Button 
       onClick={() => openDialog(rowData)} 
       icon="pi pi-check" 
-      label={rowData.collection_status} 
+      label={collectionStatus[rowData.collection_status]} 
       className="mr-2" 
       severity="success"
       disabled={rowData.collection_status==='COMPLETED' ? true : false} 
@@ -91,12 +91,13 @@ export const CollectionManeger = () => {
           <Column field='date_time' header="Dia"></Column>
           <Column field='waste_name' header="Resíduo"></Column>
           <Column field='weight' header="Peso em kg"></Column>
-          { cpf && <Column field='collection_status' header='Status'> </Column>}
+          { cpf && <Column field={(data) => collectionStatus[data.collection_status]} header='Status'> </Column>}
           {cnpj && <Column field='collection_status' header='Status' body={renderButton}></Column> }
         </DataTable>
         <Dialog header="Insira os dados da coleta, por favor" visible={displayDialog} style={{ width: '50vw' }} footer={renderFooter()} onHide={() => setDisplayDialog(false)}>
           <Form>
-            <Dropdown value={status} onChange={(e) => setStatus(e.value)} options={optionsStatus} optionLabel="name" placeholder="Selecione o status" className="w-full md:w-14rem" />
+            <label htmlFor="status">Status da coleta</label>
+            <Dropdown id='status' value={status} onChange={(e) => setStatus(e.value)} options={optionsStatus} optionLabel="name" placeholder="Selecione o status" className="w-full md:w-14rem" />
             <label htmlFor="username">Peso</label>
             <InputText id="username" aria-describedby="username-help" value={weight} onChange={(e) => setWeight(e.target.value)} />
             <small id="username-help">
