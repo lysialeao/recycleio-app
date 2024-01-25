@@ -1,14 +1,33 @@
 import { useContext, useState, useEffect } from 'react'
-import { useNavigate, NavLink } from 'react-router-dom'
 
 import { UserContext } from '../../context/userContext'
 
-import { Container, Content } from './styles'
+import logo from '../../assets/logo.png'
 
-import { userItems, collectionPointItems, notLoggedItems } from '../../constants/menu'
+import { 
+  userItems, 
+  collectionPointItems, 
+  notLoggedItems 
+} from '../../constants/menu'
+
+import {
+  Container,
+  InnerNavigation,
+  ExtendNavigation,
+  LeftWrapper,
+  RightWrapper,
+  WrapperLinks,
+  StyledLink,
+  Logo,
+  OpenLinksButton,
+  StyledLinkExtended
+} from "./styles"
+
 
 export const Menu = () => {
   const [items, setItems] = useState([])
+  const [extended, setExtended] = useState(false)
+
 
   const { user, signout } = useContext(UserContext)
 
@@ -32,14 +51,17 @@ export const Menu = () => {
   }, [login])
 
   return (
-    <Container>
-      <NavLink to='/'>
-        recycleio
-      </NavLink>
-      <Content>
-        { items?.map((item) => {
+
+    <Container extendedNavigation={extended}>
+      <InnerNavigation>
+        <LeftWrapper>
+          <Logo src={logo} />
+        </LeftWrapper>
+        <RightWrapper>
+        <WrapperLinks>
+          { items?.map((item) => {
           return (
-            <NavLink to={item.route}
+            <StyledLink to={item.route}
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? 'bold' : 'normal',
@@ -48,12 +70,12 @@ export const Menu = () => {
               }}
             >
               {item.label}
-            </NavLink>
+            </StyledLink>
           )
         })}
         {
           user?.login && (
-            <NavLink to={'/'}
+            <StyledLink to={'/'}
               style={({ isActive }) => {
                 return {
                   fontWeight: isActive ? 'bold' : 'normal',
@@ -63,10 +85,51 @@ export const Menu = () => {
               onClick={signout}
             >
               Sair
-            </NavLink>
+            </StyledLink>
           )
         }
-       </Content>
+          </WrapperLinks>
+          <OpenLinksButton onClick={() => setExtended((curr) => !curr)}>
+            {extended ? <> &#10005;</> : <> &#8801;</>}
+          </OpenLinksButton>
+         
+        </RightWrapper>
+      </InnerNavigation>
+      {
+        extended && (
+          <ExtendNavigation>
+            { items?.map((item) => {
+              return (
+                <StyledLinkExtended to={item.route}
+                  style={({ isActive }) => {
+                    return {
+                      fontWeight: isActive ? 'bold' : 'normal',
+                      borderBottom: isActive ? 'solid 1px' : 'none'
+                    }
+                  }}
+                >
+                  {item.label}
+                </StyledLinkExtended>
+              )
+            })}
+            {
+              user?.login && (
+                <StyledLinkExtended to={'/'}
+                  style={({ isActive }) => {
+                    return {
+                      fontWeight: isActive ? 'bold' : 'normal',
+                      borderBottom: isActive ? 'solid 1px' : 'none'
+                    }
+                  }}
+                  onClick={signout}
+                >
+                  Sair
+                </StyledLinkExtended>
+              )
+            }
+          </ExtendNavigation>
+        )
+      }
     </Container>
-  )
+  );
 }

@@ -96,6 +96,29 @@ export const CollectionManeger = () => {
     />
   };
 
+  const acceptNewCollection = useCallback(() => {
+    // updateCollection({ id: tempId.current, weight, status: status.code })
+    //   .then(() => {
+    //     toast.current.show({ severity: 'info', summary: 'Sucesso', detail: 'Coleta atualizada!', life: 3000 });
+    //     setUpdate(true)
+    //     setDisplayDialog(false);
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //     reject()
+    //   });
+    console.log(newCollection)
+  }, []);
+
+  const renderFooterNewCollection = useCallback(() => {
+    return (
+      <div>
+        <Button label="Cancelar" severity="secondary" icon="pi pi-times" onClick={cancel} className="p-button-text" />
+        <Button label="Inserir coleta" severity="success" icon="pi pi-check" onClick={acceptNewCollection} autoFocus />
+      </div>
+    );
+  }, [acceptNewCollection, reject]);
+
   return (
     <Layout>
       <Container>
@@ -120,7 +143,7 @@ export const CollectionManeger = () => {
           { cpf && <Column field={(data) => collectionStatus[data.collection_status]} header='Status'> </Column>}
           {cnpj && <Column field='collection_status' header='Status' body={renderButton}></Column> }
         </DataTable>
-        <Dialog header="Insira os dados da coleta, por favor" visible={modal} style={{ width: '50vw' }} footer={renderFooter()} onHide={() => setDisplayDialog(false)}>
+        <Dialog header="Insira os dados da coleta, por favor" visible={displayDialog} style={{ width: '50vw' }} footer={renderFooter()} onHide={() => setDisplayDialog(false)}>
           <Form>
             <label htmlFor="status">Status da coleta</label>
             <Dropdown id='status' value={status} onChange={(e) => setStatus(e.value)} options={optionsStatus} optionLabel="name" placeholder="Selecione o status" className="w-full md:w-14rem" />
@@ -136,7 +159,7 @@ export const CollectionManeger = () => {
           header="Insira os dados da coleta, por favor" 
           visible={modal} 
           style={{ width: '50vw' }} 
-          footer={renderFooter()} 
+          footer={renderFooterNewCollection()} 
           onHide={() => setModal(false)}
         >
           <Form>
@@ -145,20 +168,24 @@ export const CollectionManeger = () => {
               id="client" 
               aria-describedby="client-help" 
               value={newCollection.client} 
-              onChange={(e) => setNewCollection({
-                ...newCollection,
-                client: e.value,
-              })} 
+              onChange={(e) => 
+                setNewCollection((curr) => ({
+                ...curr,
+                client: e.target.value
+              }))
+              }
             />
             <label htmlFor="date">Data</label>
             <InputText 
               id="date" 
               aria-describedby="date-help" 
               value={newCollection.date} 
-              onChange={(e) => setNewCollection({
-                ...newCollection,
-                date: e.value,
-              })} 
+              onChange={(e) => 
+                setNewCollection((curr) => ({
+                ...curr,
+                date: e.target.value
+              }))
+              }
             />
             <label htmlFor="status">Status</label>
             <Dropdown 
@@ -174,19 +201,23 @@ export const CollectionManeger = () => {
               id="waste" 
               aria-describedby="waste" 
               value={newCollection.waste} 
-              onChange={(e) => setNewCollection({
-                ...newCollection,
-                waste: e.value,
-              })} 
+              onChange={(e) => 
+                setNewCollection((curr) => ({
+                ...curr,
+                waste: e.target.value
+              }))
+              }
             />
             <label htmlFor="weight">Peso</label>
             <InputText 
               id="weight" 
               value={newCollection.weight} 
-              onChange={(e) => setNewCollection({
-                ...newCollection,
-                weight: e.value,
-              })} 
+              onChange={(e) => 
+                setNewCollection((curr) => ({
+                ...curr,
+                wight: e.target.value
+              }))
+              }
             />
             <small id="weight-help">
               Digite o peso total dos resíduos que foram coletados.

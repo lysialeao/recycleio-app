@@ -1,35 +1,94 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components"
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  position: fixed;
-  z-index: 999;
+export const Container = styled.nav`
+    width: 100%;
+    height: ${({ extendedNavigation }) => (extendedNavigation  ? '100vh' : '80px')};
 
-  justify-content: space-between;
-  align-items: center;
+    background-color: ${({ theme }) => theme.color.primary.main};
+    display: flex;
+    flex-direction: column;
 
-  width: 100%;
-  height: 60px;
+    z-index: 999;
+    position: fixed;
 
-  padding: 20px 60px;
+    @media (min-width: 1024px) {
+        height: 80px;
+    }
 
-  background-color: ${({ theme }) => theme.color.primary.main};
-  color: ${({ theme }) => theme.color.white};
+`
+export const LeftWrapper = styled.div`
+    flex: 30%;
+    display: flex;
 
-  & a {
-    color:${({ theme }) => theme.color.white};
+    justify-content: flex-start;
+    padding-left: 5%;
+`
+
+export const RightWrapper = styled.div`
+    flex: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5%;
+`
+
+export const InnerNavigation = styled.div`
+    width: 100%;
+    height: 80px;
+    display: flex;
+`
+
+export const ExtendNavigation = styled.div`
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: 1024px) {
+        display: none;
+    }
+`
+
+export const WrapperLinks = styled.div`
+    display: flex;
+    flex-direction: row;
+`
+
+export const StyledLink = styled(NavLink)`
+    color: ${({ theme }) => theme.color.white};
+    font-size: medium;
     text-decoration: none;
-  }
+    margin: 10px;
 
+    @media (max-width: 1024px) {
+        display: none;
+    }
 `
 
-export const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-
-  
+export const StyledLinkExtended = styled(NavLink)`
+    color: ${({ theme }) => theme.color.white};
+    font-size: medium;
+    text-decoration: none;
+    margin: 10px;
 `
 
+export const Logo = styled.img`
+    margin: 10px;
+    max-width: 180px;
+    max-height: 180px;
+`
+
+export const OpenLinksButton = styled.button`
+    width: 70px;
+    height: 50px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 45px;
+    cursor: pointer;
+
+    @media (min-width: 1024px) {
+        display: none;
+    }
+`
