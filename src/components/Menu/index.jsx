@@ -10,7 +10,7 @@ import { userItems, collectionPointItems, notLoggedItems } from '../../constants
 export const Menu = () => {
   const [items, setItems] = useState([])
 
-  const { user } = useContext(UserContext)
+  const { user, signout } = useContext(UserContext)
 
   const { login, data } = user || false
 
@@ -51,6 +51,21 @@ export const Menu = () => {
             </NavLink>
           )
         })}
+        {
+          user?.login && (
+            <NavLink to={'/'}
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  borderBottom: isActive ? 'solid 1px' : 'none'
+                }
+              }}
+              onClick={signout}
+            >
+              Sair
+            </NavLink>
+          )
+        }
        </Content>
     </Container>
   )

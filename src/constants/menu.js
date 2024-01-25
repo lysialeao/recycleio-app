@@ -15,7 +15,7 @@ export const userItems = [
       route: '/reports'
     },
     {
-      label: 'Perfil',
+      label: 'Perfil (usuário)',
       icon: 'pi pi-fw pi-user',
       route: '/profile'
     }
@@ -43,7 +43,7 @@ export const collectionPointItems = [
         route: '/reports'
       },
       {
-        label: 'Perfil',
+        label: 'Perfil (ponto de coleta)',
         icon: 'pi pi-fw pi-user',
         route: '/profile'
       }

@@ -12,12 +12,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ login: false })
   const [loading, setLoading] = useState(false)
 
-  const values = {
-    user,
-    setUser,
-    loading,
-    setLoading
-  }
+  
 
   const getUserAddress = async ({ id }) => {
     await getAddress({ id })
@@ -33,6 +28,20 @@ export const UserProvider = ({ children }) => {
       getUserAddress({ id: user?.data?.address_id})
     }
   }, [user.login])
+
+  const signout = () => {
+    setUser({
+      login: false
+    })
+  }
+
+  const values = {
+    user,
+    setUser,
+    loading,
+    setLoading,
+    signout
+  }
 
   return (
     <UserContext.Provider value={values}>
