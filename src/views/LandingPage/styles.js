@@ -11,6 +11,8 @@ export const Container = styled.div`
   -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
   box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
 
+  background-color: #fff2ee;
+
   // align-items: center;
   // justify-content: center;
 
@@ -26,4 +28,15 @@ export const Container = styled.div`
   border-radius: 10px;
   background-attachment: fixed;
 
+`
+
+export const WrapperCards = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  padding: ${({ theme }) => theme.padding.medium};
+  gap: ${({ theme }) => theme.padding.medium};
 `

@@ -13,7 +13,7 @@ import { Layout } from "../../components/Layout"
 import { UserContext } from "../../context/userContext"
 import { useCollection } from "../../hooks/useCollection"
 
-import { Container, Form } from "./styles"
+import { Container, Form, Wrapper } from "./styles"
 import { optionsStatus, collectionStatus } from "../../enum/status";
 import { updateCollection } from "../../services/collection";
 
@@ -27,8 +27,18 @@ export const CollectionManeger = () => {
   const [status, setStatus] = useState('')
   const [weight, setWeight] = useState('')
   const [displayDialog, setDisplayDialog] = useState(false);
+  const [modal, setModal] = useState(false)
+
+  const [newCollection, setNewCollection] = useState({
+    client: '',
+    date: '',
+    status: '',
+    waste: '',
+    weight: '',
+  })
 
   const toast = useRef(null);
+  const modalRef = useRef(null)
   const tempId = useRef(null);
 
   const accept = useCallback(() => {
@@ -68,7 +78,12 @@ export const CollectionManeger = () => {
   const openDialog = useCallback((dataRow) => {
     tempId.current = dataRow.id;
     setDisplayDialog(true);
-}, []);
+  }, []);
+
+  const openModal = useCallback((dataRow) => {
+    tempId.current = dataRow.id;
+    setModal(true);
+  }, []);
 
   const renderButton = (rowData) => {
     return <Button 
@@ -85,6 +100,17 @@ export const CollectionManeger = () => {
     <Layout>
       <Container>
         <Toast ref={toast} />
+        <Toast ref={modalRef} />
+        <Wrapper>
+          <Button 
+            onClick={() => openModal({ id: 1})} 
+            // icon="pi pi-check" 
+            label={'Adicionar nova coleta'} 
+            className="mr-2" 
+            severity="success"
+            disabled={false} 
+          />
+        </Wrapper>
         <DataTable value={collections} editMode="row" dataKey={'id'} onRowEditComplete={() => { }} tableStyle={{ minWidth: '50rem' }}>
           {cnpj && <Column field="user_info.name" header="Cliente"></Column>}
           {cpf && <Column field="trade_name" header="Ponto coletor"></Column>}
@@ -94,13 +120,75 @@ export const CollectionManeger = () => {
           { cpf && <Column field={(data) => collectionStatus[data.collection_status]} header='Status'> </Column>}
           {cnpj && <Column field='collection_status' header='Status' body={renderButton}></Column> }
         </DataTable>
-        <Dialog header="Insira os dados da coleta, por favor" visible={displayDialog} style={{ width: '50vw' }} footer={renderFooter()} onHide={() => setDisplayDialog(false)}>
+        <Dialog header="Insira os dados da coleta, por favor" visible={modal} style={{ width: '50vw' }} footer={renderFooter()} onHide={() => setDisplayDialog(false)}>
           <Form>
             <label htmlFor="status">Status da coleta</label>
             <Dropdown id='status' value={status} onChange={(e) => setStatus(e.value)} options={optionsStatus} optionLabel="name" placeholder="Selecione o status" className="w-full md:w-14rem" />
             <label htmlFor="username">Peso</label>
             <InputText id="username" aria-describedby="username-help" value={weight} onChange={(e) => setWeight(e.target.value)} />
             <small id="username-help">
+              Digite o peso total dos resíduos que foram coletados.
+            </small>
+          </Form>
+        </Dialog>
+        {/* Dialog for new collection */}
+        <Dialog 
+          header="Insira os dados da coleta, por favor" 
+          visible={modal} 
+          style={{ width: '50vw' }} 
+          footer={renderFooter()} 
+          onHide={() => setModal(false)}
+        >
+          <Form>
+            <label htmlFor="client">Cliente</label>
+            <InputText 
+              id="client" 
+              aria-describedby="client-help" 
+              value={newCollection.client} 
+              onChange={(e) => setNewCollection({
+                ...newCollection,
+                client: e.value,
+              })} 
+            />
+            <label htmlFor="date">Data</label>
+            <InputText 
+              id="date" 
+              aria-describedby="date-help" 
+              value={newCollection.date} 
+              onChange={(e) => setNewCollection({
+                ...newCollection,
+                date: e.value,
+              })} 
+            />
+            <label htmlFor="status">Status</label>
+            <Dropdown 
+              id='status' 
+              value={newCollection.status} 
+              onChange={(e) => setNewCollection({
+                ...newCollection,
+                status: e.value,
+              })} 
+              options={optionsStatus} optionLabel="name" placeholder="Selecione o status" className="w-full md:w-14rem" />
+            <label htmlFor="waste">Resíduo</label>
+            <InputText 
+              id="waste" 
+              aria-describedby="waste" 
+              value={newCollection.waste} 
+              onChange={(e) => setNewCollection({
+                ...newCollection,
+                waste: e.value,
+              })} 
+            />
+            <label htmlFor="weight">Peso</label>
+            <InputText 
+              id="weight" 
+              value={newCollection.weight} 
+              onChange={(e) => setNewCollection({
+                ...newCollection,
+                weight: e.value,
+              })} 
+            />
+            <small id="weight-help">
               Digite o peso total dos resíduos que foram coletados.
             </small>
           </Form>

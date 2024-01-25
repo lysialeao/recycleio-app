@@ -18,3 +18,11 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
 `
+
+export const Wrapper = styled.div`
+  widht: 100%:
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+`

@@ -54,5 +54,7 @@ export const Card = styled.div`
 
   color: #314a30;
 
+  padding: ${({ theme }) => theme.padding.medium}
+
 
 `

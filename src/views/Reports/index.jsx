@@ -10,6 +10,8 @@ import { TimeFilter } from '../../components/TimeFilter'
 
 import { Container, Content, WrapperRow, Card } from './styles'
 import { Empty } from '../../components/Empty'
+import { REPORTS_INFOS } from '../../constants/reports-infos'
+import { CardsInfos } from '../../components/CardsInfos'
 
 export const Reports = () => {
   const { user } = useContext(UserContext)
@@ -47,6 +49,10 @@ export const Reports = () => {
                  </Card>
               )
             })}
+            
+          </WrapperRow>
+          <WrapperRow>
+            <CardsInfos />
           </WrapperRow>
           <h2>Estatísticas</h2>
           { residues?.length > 0 ? <LineChart data={residues} /> : <Empty /> }
