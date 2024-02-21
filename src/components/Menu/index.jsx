@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-
+import { NavLink } from 'react-router-dom'
 import { UserContext } from '../../context/userContext'
 
 import logo from '../../assets/logo.png'
@@ -17,10 +17,8 @@ import {
   LeftWrapper,
   RightWrapper,
   WrapperLinks,
-  StyledLink,
   Logo,
   OpenLinksButton,
-  StyledLinkExtended
 } from "./styles"
 
 
@@ -61,31 +59,29 @@ export const Menu = () => {
         <WrapperLinks>
           { items?.map((item) => {
           return (
-            <StyledLink to={item.route}
-              style={({ isActive }) => {
+            <NavLink to={item.route}
+              style={({ isActive}) => {
                 return {
-                  fontWeight: isActive ? 'bold' : 'normal',
+                  fontWeight: isActive ? "bold" : "normal",
                   borderBottom: isActive ? 'solid 1px' : 'none'
                 }
               }}
             >
               {item.label}
-            </StyledLink>
+            </NavLink>
           )
         })}
         {
           user?.login && (
-            <StyledLink to={'/'}
-              style={({ isActive }) => {
-                return {
-                  fontWeight: isActive ? 'bold' : 'normal',
-                  borderBottom: isActive ? 'solid 1px' : 'none'
-                }
-              }}
+            <NavLink to={'/'}
+            style={({ $isActive }) => ({
+              fontWeight: $isActive ? 'bold' : 'normal',
+              borderBottom: $isActive ? 'solid 1px' : 'none'
+            })}
               onClick={signout}
             >
               Sair
-            </StyledLink>
+            </NavLink>
           )
         }
           </WrapperLinks>
@@ -100,21 +96,21 @@ export const Menu = () => {
           <ExtendNavigation>
             { items?.map((item) => {
               return (
-                <StyledLinkExtended to={item.route}
-                  style={({ isActive }) => {
-                    return {
-                      fontWeight: isActive ? 'bold' : 'normal',
-                      borderBottom: isActive ? 'solid 1px' : 'none'
-                    }
-                  }}
+                <NavLink to={item.route}
+                style={({ isActive}) => {
+                  return {
+                    fontWeight: isActive ? "bold" : "normal",
+                    borderBottom: isActive ? 'solid 1px' : 'none'
+                  }
+                }}
                 >
                   {item.label}
-                </StyledLinkExtended>
+                </NavLink>
               )
             })}
             {
               user?.login && (
-                <StyledLinkExtended to={'/'}
+                <NavLink to={'/'}
                   style={({ isActive }) => {
                     return {
                       fontWeight: isActive ? 'bold' : 'normal',
@@ -124,9 +120,10 @@ export const Menu = () => {
                   onClick={signout}
                 >
                   Sair
-                </StyledLinkExtended>
+                </NavLink>
               )
             }
+
           </ExtendNavigation>
         )
       }

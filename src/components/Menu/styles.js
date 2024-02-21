@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import styled from "styled-components"
 
 export const Container = styled.nav`
@@ -37,6 +36,17 @@ export const InnerNavigation = styled.div`
     width: 100%;
     height: 80px;
     display: flex;
+
+    a {
+        color: ${({ theme }) => theme.color.white};
+        font-size: medium;
+        text-decoration: none;
+        margin: 10px;
+
+        @media (max-width: 1024px) {
+            display: none;
+        }
+    }
 `
 
 export const ExtendNavigation = styled.div`
@@ -44,6 +54,13 @@ export const ExtendNavigation = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    a {
+        color: ${({ theme }) => theme.color.white};
+        font-size: medium;
+        text-decoration: none;
+        margin: 10px;
+    }
 
     @media (min-width: 1024px) {
         display: none;
@@ -53,24 +70,6 @@ export const ExtendNavigation = styled.div`
 export const WrapperLinks = styled.div`
     display: flex;
     flex-direction: row;
-`
-
-export const StyledLink = styled(NavLink)`
-    color: ${({ theme }) => theme.color.white};
-    font-size: medium;
-    text-decoration: none;
-    margin: 10px;
-
-    @media (max-width: 1024px) {
-        display: none;
-    }
-`
-
-export const StyledLinkExtended = styled(NavLink)`
-    color: ${({ theme }) => theme.color.white};
-    font-size: medium;
-    text-decoration: none;
-    margin: 10px;
 `
 
 export const Logo = styled.img`
