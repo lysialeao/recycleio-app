@@ -9,6 +9,9 @@ export const Container = styled.div`
   padding: ${({ theme }) => theme.padding.large};
 `
 export const Content = styled.div`
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 

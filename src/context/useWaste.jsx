@@ -25,10 +25,16 @@ export const WasteProvider = ({ children }) => {
       wastes.find(waste => userWaste.waste_id === waste.id));
   }
 
+  const formatterWastes = ({ wastesByPoint }) => {
+    
+
+    console.log(wastes.filter(({ id })  => wastesByPoint.include(id)))
+  }
+
   const getWasteByPoint = async ({ collection_point_id }) => {
     setLoading(true)
     await getWasteByCollectionPoint({ collection_point_id })
-      .then(({ data }) => setUserWastes(data?.wasteByCollectionPoint))
+      .then(({ data }) => formatterWastes({ wastesByPoint: data?.wasteByCollectionPoint }))
       .catch(({ error }) => toast.error(error || 'Houve um erro. Tente novamente'))
       .finally(setLoading(false))
   }
@@ -72,12 +78,9 @@ export const WasteProvider = ({ children }) => {
     getAll()
   }, [])
 
-  // useEffect(() => {
-  //   getWasteByPoint({ collection_point_id: `${cnpj}` })
-  //   const wastesFormatted = userWastes && wastes && UserWastes()
-  //   // console.log(wastesFormatted)
-  //   setUserWastesFormatted(wastesFormatted)
-  // }, [cnpj, userWastes])
+  useEffect(() => {
+    getWasteByPoint({ collection_point_id: `${cnpj}` })
+  }, [cnpj])
 
   return (
     <WasteContext.Provider value={values}>

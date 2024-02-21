@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-  widht: 100%;
+  width: 100%;
   height: 50vw;
 
   display: flex;
@@ -9,6 +9,10 @@ export const Container = styled.div`
 
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    flex-direction: column-reverse;
+  }
 `
 export const ImageContent = styled.div`
   width: 50%;
@@ -20,6 +24,10 @@ export const ImageContent = styled.div`
   background-size: cover;
   background-position: center;
   opacity: 0.8;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `
 export const Content = styled.div`
   width: 50%;
@@ -29,5 +37,9 @@ export const Content = styled.div`
 
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 
 `

@@ -32,15 +32,22 @@ export const ScheduleCollection = () => {
     }
   })
 
+  const { trade_name, address_details, collection_days }= point[0] || ''
+  const { street, city } = address_details || ''
+
   return (
     <Layout>
       <Container>
-        <Header />
+        <Header> 
+
+        {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/rxJdhAk9dEE?si=ODhj0Z-v7DIWNYi7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */}
+        </Header>
         <Content>
           <ProfilePoint>
-            <h1>{point[0]?.trade_name}</h1>
+            <h1>{trade_name}</h1>
+            <h2>A {trade_name} está localizada em {street}, {city} </h2>
+            <h2>. Atuando nos dias {collection_days}</h2>
           </ProfilePoint>
-        </Content>
         <Wrapper>
           <MultiSelect
             value={residues}
@@ -64,6 +71,7 @@ export const ScheduleCollection = () => {
           disabled={!user?.login}
         />
         </Wrapper>
+        </Content>
       </Container>
     </Layout>
   )

@@ -6,12 +6,16 @@ import { Dropdown } from 'primereact/dropdown';
 import { Button } from "primereact/button"
 import { Column } from 'primereact/column'
 import { Toast } from 'primereact/toast';
+import { MultiSelect } from 'primereact/multiselect'
+import { Calendar } from 'primereact/calendar'
 
 
 import { Layout } from "../../components/Layout"
 
 import { UserContext } from "../../context/userContext"
+import { CollectionContext } from "../../context/useCollection";
 import { useCollection } from "../../hooks/useCollection"
+import { useCollectionPoint } from "../../hooks/useCollectionPoint";
 
 import { Container, Form, Wrapper } from "./styles"
 import { optionsStatus, collectionStatus } from "../../enum/status";
@@ -23,6 +27,15 @@ export const CollectionManeger = () => {
   const { cnpj, cpf } = user?.data || undefined
 
   const { collections, setUpdate } = useCollection({ cnpj, cpf })
+  const { point } = useCollectionPoint({ cnpj })
+  const { handleOnScheduleCollection } = useContext(CollectionContext)
+
+  const residuess = point[0]?.waste_details?.map((waste) => {
+    return {
+      name: waste.name,
+      code: waste.id
+    }
+  })
 
   const [status, setStatus] = useState('')
   const [weight, setWeight] = useState('')
@@ -33,7 +46,7 @@ export const CollectionManeger = () => {
     client: '',
     date: '',
     status: '',
-    waste: '',
+    waste: [],
     weight: '',
   })
 
@@ -97,18 +110,21 @@ export const CollectionManeger = () => {
   };
 
   const acceptNewCollection = useCallback(() => {
-    // updateCollection({ id: tempId.current, weight, status: status.code })
-    //   .then(() => {
-    //     toast.current.show({ severity: 'info', summary: 'Sucesso', detail: 'Coleta atualizada!', life: 3000 });
-    //     setUpdate(true)
-    //     setDisplayDialog(false);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //     reject()
-    //   });
-    console.log(newCollection)
-  }, []);
+    const { date, status, waste, weight, client } = newCollection;
+    
+      handleOnScheduleCollection({ day: date, residues: waste, cnpj, weight, user_name: client, status})
+        .then(() => {
+          toast.current.show({ severity: 'info', summary: 'Sucesso', detail: 'Coleta atualizada!', life: 3000 });
+          setUpdate(true)
+          setDisplayDialog(false);
+        })
+        .catch(error => {
+          console.error(error);
+          reject()
+        });
+
+    });
+  ;
 
   const renderFooterNewCollection = useCallback(() => {
     return (
@@ -124,18 +140,22 @@ export const CollectionManeger = () => {
       <Container>
         <Toast ref={toast} />
         <Toast ref={modalRef} />
-        <Wrapper>
-          <Button 
-            onClick={() => openModal({ id: 1})} 
-            // icon="pi pi-check" 
-            label={'Adicionar nova coleta'} 
-            className="mr-2" 
-            severity="success"
-            disabled={false} 
-          />
+        {
+          cnpj && 
+            <Wrapper>
+              <Button 
+                onClick={() => openModal({ id: 1})} 
+                // icon="pi pi-check" 
+                label={'Adicionar nova coleta'} 
+                className="mr-2" 
+                severity="success"
+                disabled={false} 
+              />
         </Wrapper>
+          
+        }
         <DataTable value={collections} editMode="row" dataKey={'id'} onRowEditComplete={() => { }} tableStyle={{ minWidth: '50rem' }}>
-          {cnpj && <Column field="user_info.name" header="Cliente"></Column>}
+          {cnpj && <Column field={({user_info, user_name }) => user_info?.name ? user_info.name : user_name } header="Cliente"></Column>}
           {cpf && <Column field="trade_name" header="Ponto coletor"></Column>}
           <Column field='date_time' header="Dia"></Column>
           <Column field='waste_name' header="Resíduo"></Column>
@@ -148,7 +168,7 @@ export const CollectionManeger = () => {
             <label htmlFor="status">Status da coleta</label>
             <Dropdown id='status' value={status} onChange={(e) => setStatus(e.value)} options={optionsStatus} optionLabel="name" placeholder="Selecione o status" className="w-full md:w-14rem" />
             <label htmlFor="username">Peso</label>
-            <InputText id="username" aria-describedby="username-help" value={weight} onChange={(e) => setWeight(e.target.value)} />
+            <InputText id="username" aria-describedby="username-help" value={weight} onChange={(e) => setWeight(e.target.value)} required/>
             <small id="username-help">
               Digite o peso total dos resíduos que foram coletados.
             </small>
@@ -176,16 +196,15 @@ export const CollectionManeger = () => {
               }
             />
             <label htmlFor="date">Data</label>
-            <InputText 
-              id="date" 
-              aria-describedby="date-help" 
-              value={newCollection.date} 
+            <Calendar
+              value={newCollection.date}
               onChange={(e) => 
                 setNewCollection((curr) => ({
                 ...curr,
                 date: e.target.value
               }))
               }
+              showIcon
             />
             <label htmlFor="status">Status</label>
             <Dropdown 
@@ -193,20 +212,24 @@ export const CollectionManeger = () => {
               value={newCollection.status} 
               onChange={(e) => setNewCollection({
                 ...newCollection,
-                status: e.value,
+                status: e.target.value.code,
               })} 
               options={optionsStatus} optionLabel="name" placeholder="Selecione o status" className="w-full md:w-14rem" />
             <label htmlFor="waste">Resíduo</label>
-            <InputText 
-              id="waste" 
-              aria-describedby="waste" 
-              value={newCollection.waste} 
+            <MultiSelect
+              value={newCollection.waste}
+              options={residuess}
               onChange={(e) => 
-                setNewCollection((curr) => ({
-                ...curr,
-                waste: e.target.value
-              }))
-              }
+                setNewCollection({
+                  ...newCollection,
+                  waste: e.value,
+                })
+              } 
+              optionLabel="name"
+              display="chip"
+              placeholder={'l'}
+              maxSelectedLabels={1}
+              className="w-full md:w-20rem"
             />
             <label htmlFor="weight">Peso</label>
             <InputText 
@@ -215,9 +238,10 @@ export const CollectionManeger = () => {
               onChange={(e) => 
                 setNewCollection((curr) => ({
                 ...curr,
-                wight: e.target.value
+                weight: e.target.value
               }))
               }
+              required
             />
             <small id="weight-help">
               Digite o peso total dos resíduos que foram coletados.

@@ -5,4 +5,5 @@ export const Container = styled.div`
   height: auto;
   min-height: 50vw;
   padding: 120px 60px 60px 60px;
+
 `

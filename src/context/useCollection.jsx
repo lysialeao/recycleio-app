@@ -34,7 +34,6 @@ export const CollectionProvider = ({ children }) => {
     setLoading(true)
     await getAllCollectionPoints()
       .then(({ data }) => data?.collectionPoints.map((point) => getWastesByPoints(point)))
-      // setPoints(data?.collectionPoints))
       .catch((error) => console.error(error))
       .finally(setLoading(false))
   }
@@ -52,7 +51,7 @@ export const CollectionProvider = ({ children }) => {
     getCollectionPointsZipCode({ location })
   }
 
-  const handleOnScheduleCollection = async({ day, residues, cnpj, cpf }) => {
+  const handleOnScheduleCollection = async({ day, residues, cnpj, cpf, user_name, weight, status }) => {
     event.preventDefault()
     setLoading(true)
 
@@ -64,7 +63,10 @@ export const CollectionProvider = ({ children }) => {
         user_id: cpf,
         collection_point_id: cnpj,
         date_time: day,
-        waste_id: residuesToCollection
+        waste_id: residuesToCollection,
+        user_name, 
+        weight,
+        status
       })
       .then(toast.success('Coleta agendada!'))
       .catch((error) => console.error(error))

@@ -4,14 +4,20 @@ export const postCollection = async ({
   user_id,
   collection_point_id,
   date_time,
-  waste_id
+  waste_id,
+  user_name, 
+  weight, 
+  status
 }) => {
 
   const body = {
     user_id,
     collection_point_id,
     date_time,
-    waste_id
+    waste_id,
+    user_name, 
+    weight,
+    status
   }
 
   const endpoint = 'collection'

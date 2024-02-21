@@ -12,11 +12,19 @@ export const Container = styled.div`
 
   gap: ${({ theme }) => theme.padding.large};
   padding: ${({ theme }) => theme.padding.large};
+
 `
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
+
+  
+  .p-button {
+    background-color: ${({ theme }) => theme.color.secondary.main};
+    border-color: ${({ theme }) => theme.color.secondary.main};
+
+  }
 `
 
 export const Wrapper = styled.div`

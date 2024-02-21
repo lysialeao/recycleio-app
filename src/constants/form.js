@@ -9,6 +9,6 @@ export const FORM = {
   SELECT_RESIDUES: 'Selecione os resíduos que deseja descartar',
   LOGIN: 'Login',
   PASSWORD: 'Senha',
-  NOT_REGISTER: 'Não tem uma conta?',
+  NOT_REGISTER: 'Não tem uma conta? ',
   SIGNIN: 'registre-se'
 }

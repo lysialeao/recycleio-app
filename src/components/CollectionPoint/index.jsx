@@ -32,8 +32,8 @@ export const CollectionPoint = ({
           })
         }
         </WrapperTags>
-      </Informations>
       <Button label='Visualizar +' iconPos="right" severity="warning" onClick={() => navigate(`/collection-point/${cnpj}`, '_blank')} />
+      </Informations>
     </Container>
   )
 }
