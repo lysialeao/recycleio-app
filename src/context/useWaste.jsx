@@ -18,37 +18,35 @@ export const WasteProvider = ({ children }) => {
   const [userWastesFormatted, setUserWastesFormatted] = useState([])
 
   const { user } = useContext(UserContext)
-  const { cnpj } = user?.data || ''
+  const cnpj = user?.data?.cnpj || '12'
 
-  const UserWastes = () => {
-    return userWastes.map(userWaste =>
-      wastes.find(waste => userWaste.waste_id === waste.id));
-  }
-
-  const formatterWastes = ({ wastesByPoint }) => {
-    
-
-    console.log(wastes.filter(({ id })  => wastesByPoint.include(id)))
-  }
-
-  const getWasteByPoint = async ({ collection_point_id }) => {
+  const getWasteByPoint = async () => {
     setLoading(true)
-    await getWasteByCollectionPoint({ collection_point_id })
-      .then(({ data }) => formatterWastes({ wastesByPoint: data?.wasteByCollectionPoint }))
+    await getWasteByCollectionPoint({ collection_point_id: cnpj })
+      .then(({ data }) => {
+        setUserWastes(data?.wasteByCollectionPoint)
+        getAll({ userWastes: data?.wasteByCollectionPoint})
+        })
       .catch(({ error }) => toast.error(error || 'Houve um erro. Tente novamente'))
       .finally(setLoading(false))
   }
 
-  const formatWastes = ({ wastes }) => {
-
-    setWastes(wastes)
-    userWastes && console.log(userWastes)
+  const filterWates = ({ wastes, userWastes }) => {
+    if ( userWastes.length >= 1) {
+      const wasteIds = new Set(userWastes.map(item => item.waste_id));
+      const result= wastes.filter(item => !wasteIds.has(item.id));
+      return setWastes(result)
+    } 
+    else {
+      return setWastes(wastes)
+      }
   }
 
-  const getAll = async () => {
+
+  const getAll = async ({ userWastes }) => {
     setLoading(true)
     await getAllWaste()
-      .then(({ data }) => formatWastes({ wastes : data?.waste }))
+      .then(({ data }) => filterWates({ wastes:data?.waste, userWastes }))
       .catch(({ error }) => toast.error(error))
       .finally(setLoading(false))
   }
@@ -58,7 +56,7 @@ export const WasteProvider = ({ children }) => {
     await insertWaste({ collection_point_id: user?.data.cnpj, waste_id: waste?.id })
       .then(() => {
         toast.success(SUCCESS.INSERTED_WASTE)
-        userWastes.push(waste)
+        getWasteByPoint()
       })
       .catch(({ error }) => toast.error(error))
       .finally(() => {
@@ -74,13 +72,10 @@ export const WasteProvider = ({ children }) => {
     addWaste
   }
 
-  useEffect(() => {
-    getAll()
+   useEffect(() => {
+    getWasteByPoint()
   }, [])
 
-  useEffect(() => {
-    getWasteByPoint({ collection_point_id: `${cnpj}` })
-  }, [cnpj])
 
   return (
     <WasteContext.Provider value={values}>

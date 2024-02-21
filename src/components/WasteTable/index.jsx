@@ -10,7 +10,7 @@ import { WasteContext } from '../../context/useWaste'
 
 export const WasteTable = () => {
   const [ status ] = useState(['ACTIVE', 'INACTIVE'])
-  const { userWastesFormatted } = useContext(WasteContext)
+  const { userWastes } = useContext(WasteContext)
 
   const getSeverity = (value) => {
     switch (value) {
@@ -44,7 +44,7 @@ export const WasteTable = () => {
   }
 
   return (
-    <DataTable value={userWastesFormatted} editMode="row" dataKey="id" onRowEditComplete={() => {}} tableStyle={{ minWidth: '50rem' }}>
+    <DataTable value={userWastes} editMode="row" dataKey="id" onRowEditComplete={() => {}} tableStyle={{ minWidth: '50rem' }}>
       <Column field="name" header="Resíduo"></Column>
       <Column field="status" header="Status" body={statusBodyTemplate} editor={(options) => statusEditor(options)} style={{ width: '20%' }}></Column>
       <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
