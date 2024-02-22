@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast'
 
 import { UserContext } from './userContext'
 
-import { getWasteByCollectionPoint, getAllWaste, insertWaste} from '../services/waste'
+import { getWasteByCollectionPoint, getAllWaste, insertWaste, updateWasteStatus} from '../services/waste'
 import { SUCCESS } from '../constants/success'
 
 export const WasteContext = createContext()
@@ -64,12 +64,25 @@ export const WasteProvider = ({ children }) => {
       })
   }
 
+  const updateWaste = async ({ waste_id, collection_point_id, status }) => {
+    await updateWasteStatus({ collection_point_id, waste_id, status})
+      .then(() => {
+        toast.success(SUCCESS.UPDATED_WASTE_STATUS)
+        getWasteByPoint()
+      })
+      .catch(({ error }) => toast.error(error))
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
   const values = {
     loading,
     wastes,
     userWastes,
     userWastesFormatted,
-    addWaste
+    addWaste,
+    updateWaste
   }
 
    useEffect(() => {

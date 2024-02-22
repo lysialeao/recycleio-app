@@ -23,3 +23,15 @@ export const insertWaste = async ({ collection_point_id, waste_id }) => {
 
   return API.post(endpoint, body)
 }
+
+export const updateWasteStatus = async ({ collection_point_id, waste_id, status }) => {
+
+  const body = {
+    waste_id,
+    status
+  }
+
+  const endpoint = `waste/point/${collection_point_id}`
+
+  return API.patch(endpoint, body)
+}
