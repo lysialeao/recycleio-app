@@ -9,9 +9,9 @@ export const CardsInfos = () => {
             REPORTS_INFOS.map((item, index) => {
               return (
                 <Card key={index}>
+                  <img src={item.icon} width='70px' height={'70px'}/>
                   <CardTile><h2>{item.residue}</h2></CardTile>
                   <CardInfo>{item.info}</CardInfo>
-                  <img src={item.icon} width='50px' height={'50px'}/>
                 </Card>
               )
             })

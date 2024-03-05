@@ -12,12 +12,14 @@ export const Card = styled.div`
   border-radius: 10px;
 
   color: #314a30;
+  background-color: white;
 
   padding: ${({ theme }) => theme.padding.medium};
 
   border-radius: 10px;
-  -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
-  box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
+  /* -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`}; */
+  /* box-shadow: ${({ theme }) => `5px 5px 15px 5px #fcbb9b`}; */
+  border: solid 2px #fcbb9b;
 
 `
 

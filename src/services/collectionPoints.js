@@ -5,9 +5,12 @@ export const getAllCollectionPoints = async () => {
   return await API.get(endpoint)
 }
 
-export const getCollectionPointsByZipCode = async ({ zip_code }) => {
-  const endpoint =  `points/${zip_code}`
-  return await API.get(endpoint)
+export const getCollectionPointsFilter = async ({ wastes }) => {
+  const endpoint =  `points/filter`
+
+  const body = { wastes: wastes}
+
+  return await API.post(endpoint, body)
 }
 
 export const getCollectionPointByCnpj = async ({ cnpj }) => {

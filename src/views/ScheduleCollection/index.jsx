@@ -14,7 +14,9 @@ import { useCollectionPoint } from "../../hooks/useCollectionPoint"
 import { CollectionContext } from "../../context/useCollection"
 import { UserContext } from "../../context/userContext"
 
-import { Container, Header, Wrapper, Content, ProfilePoint } from "./styles"
+import { Container, Header, Wrapper, Content, ProfilePoint, WrapperCards, Card } from "./styles"
+import { REPORTS_INFOS } from "../../constants/reports-infos";
+import { DAYS } from "../../constants/days";
 
 export const ScheduleCollection = () => {
   const { id } = useParams()
@@ -35,19 +37,51 @@ export const ScheduleCollection = () => {
   const { trade_name, address_details, collection_days }= point[0] || ''
   const { street, city } = address_details || ''
 
+  const messageDays = collection_days?.lenght >= 1 ? `Recebendo coletas nos dia: ${DAYS[collection_days]}` : `Recebendo coletas no dia: ${DAYS[collection_days]}`
+
   return (
     <Layout>
       <Container>
-        <Header> 
-
-        {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/rxJdhAk9dEE?si=ODhj0Z-v7DIWNYi7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */}
-        </Header>
+        <Header /> 
         <Content>
           <ProfilePoint>
             <h1>{trade_name}</h1>
             <h2>A {trade_name} está localizada em {street}, {city} </h2>
-            <h2>. Atuando nos dias {collection_days}</h2>
+            <h2>{messageDays}</h2>
           </ProfilePoint>
+            <Wrapper>
+            <h2>Resíduos coletados</h2>
+          <WrapperCards>
+
+           
+
+            {residuess?.map((residue) => {
+    if (residue.name === 'Plástico') {
+        return (
+            <Card>
+                <img src={REPORTS_INFOS[0].icon} width='60px' height={'60px'} />
+                <h1>{REPORTS_INFOS[0].residue}</h1>
+            </Card>
+        );
+    } 
+    if (residue.name === 'Vidro') {
+      return (
+        <Card>
+            <img src={REPORTS_INFOS[3].icon} width='60px' height={'60px'} />
+            <h1>{REPORTS_INFOS[3].residue}</h1>
+        </Card>
+    );
+
+    }
+    
+    else {
+        // Lógica para o caso em que a condição não é atendida
+        return null; // ou outro elemento JSX, se necessário
+    }
+})}
+          </WrapperCards>
+ </Wrapper>
+
         <Wrapper>
           <MultiSelect
             value={residues}
@@ -70,6 +104,7 @@ export const ScheduleCollection = () => {
           onClick={() => handleOnScheduleCollection({ day, residues, cnpj: id, cpf: user?.data?.cpf})}
           disabled={!user?.login}
         />
+        
         </Wrapper>
         </Content>
       </Container>

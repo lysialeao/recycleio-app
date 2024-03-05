@@ -57,9 +57,10 @@ export const Menu = () => {
         </LeftWrapper>
         <RightWrapper>
         <WrapperLinks>
-          { items?.map((item) => {
+          { items?.map((item, index) => {
           return (
             <NavLink to={item.route}
+              key={index}
               style={({ isActive}) => {
                 return {
                   fontWeight: isActive ? "bold" : "normal",
@@ -94,9 +95,10 @@ export const Menu = () => {
       {
         extended && (
           <ExtendNavigation>
-            { items?.map((item) => {
+            { items?.map((item, index) => {
               return (
                 <NavLink to={item.route}
+                key={index}
                 style={({ isActive}) => {
                   return {
                     fontWeight: isActive ? "bold" : "normal",

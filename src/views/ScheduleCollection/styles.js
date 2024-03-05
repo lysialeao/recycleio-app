@@ -5,42 +5,51 @@ export const Container = styled.div`
   height: auto;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
-  // gap: ${({ theme }) => theme.padding.large};
  
   border-radius: 10px;
   -webkit-box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
   box-shadow: ${({ theme }) => `5px 5px 15px 5px ${theme.color.lightGray}`};
 
+  @media (max-width: 1024px) {
+      height: auto;
+      flex-direction: column;
+    }
+
 `
 export const Header = styled.header`
   width: 100%;
-  height: 300px;
+  height: 50vw;
   border-radius: 10px;
   background-position: center;
 
-  background-image: url('https://cdn.dribbble.com/users/1450874/screenshots/14964728/media/dec18d9d0fbdc3c5e14eb544cb9d9e7e.jpg?compress=1&resize=768x576&vertical=center');
-  background-position: center;
+  background-image: url('https://cdn.dribbble.com/users/2024671/screenshots/5454098/media/b9f345266ff578a296f0d01c5e3697c9.jpg?resize=768x576&vertical=center');
+  background-repeat: no-repeat;
+  margin: auto;
 
   border-radius: 10px;
+
+  @media (max-width: 1024px) {
+      display: none;
+    }
 `
 export const Content = styled.div`
   width: 100%;
   height: auto;
+  display: flex;
+  flex-direction: column;
   padding: ${({ theme }) => theme.padding.large};
-  margin-bottom:  ${({ theme }) => theme.padding.large};
-
-  // background-color: ${({ theme }) => theme.color.primary.contrastText};
+  gap: ${({ theme }) => theme.padding.large};
 `
 
 export const Wrapper = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 
   gap: ${({ theme }) => theme.padding.small};
   padding: ${({ theme }) => theme.padding.small};
@@ -73,14 +82,46 @@ export const Wrapper = styled.div`
 export const ProfilePoint = styled.div`
   width: 100%;
   height: auto;
-
-  align-items: center;
+  display: flex;
+  flex-direction:column;
   justify-content: space-between;
 
-  margin-bottom: ${({ theme }) => theme.padding.small};
-  
+  gap: 12px;
 
   h1 {
     color: ${({ theme }) => theme.color.primary.main};
+  }
+`
+
+export const WrapperCards = styled.div`
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  gap: 16px;
+
+`
+
+export const Card = styled.div`
+  width: 100px;
+  height: 100px;
+
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  border: solid 2px green;
+  background-color: white;
+
+  h1 {
+    margin-top: 12px;
+    font-size: 14px;
   }
 `

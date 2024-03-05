@@ -14,7 +14,7 @@ import { Container, Content } from './styles'
 export const ListCollectionPoints = () => {
 
   const { loading, points, handleOnSubmit } = useContext(CollectionContext)
-
+ 
   const shouldRenderList = () => {
     if(loading) {
       return (
@@ -27,9 +27,9 @@ export const ListCollectionPoints = () => {
         </>
       )
     }
-    if(points.length <= 0) return <Empty />
-    if(points.length >= 1) {
-      return points.map((point, index) => {
+    if(points?.length <= 0) return <Empty />
+    if(points?.length >= 1) {
+      return points?.map((point, index) => {
         return <CollectionPoint
           key={index}
           cnpj={point.cnpj}
@@ -48,7 +48,7 @@ export const ListCollectionPoints = () => {
 
   return (
     <Container>
-      <SearchBar onSubmit={(event) => handleOnSubmit(event)}/>
+      <SearchBar onSubmit={(event) => handleOnSubmit(event)} />
       <Content>
         {shouldRenderList()}
       </Content>

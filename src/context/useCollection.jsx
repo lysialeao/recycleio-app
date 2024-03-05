@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
 import PropTypes from 'prop-types'
 
-import { getAllCollectionPoints, getCollectionPointsByZipCode } from '../services/collectionPoints'
+import { getAllCollectionPoints, getCollectionPointsFilter } from '../services/collectionPoints'
 import { getWasteByCollectionPoint } from '../services/waste'
 import { postCollection } from '../services/collection'
 import { toast } from 'react-hot-toast'
@@ -14,41 +14,29 @@ export const CollectionProvider = ({ children }) => {
   const [points, setPoints] = useState([])
   const [location, setLocation] = useState('')
   const [visible, setVisible] = useState(false)
-
-  const getWastesByPoints = async (point) => {
-    const cnpj = point?.cnpj
-    await getWasteByCollectionPoint({ collection_point_id: cnpj })
-      .then(({ data }) =>
-        setPoints([
-          {
-            ...point,
-            wastes: data?.wasteByCollectionPoint
-          }
-        ])
-      )
-      .catch((error) => console.error(error))
-      .finally(setLoading(false))
-  }
+  const [ wastesFilter, setWastesFilter ] = useState([])
 
   const getCollectionPoints = async () => {
     setLoading(true)
     await getAllCollectionPoints()
-      .then(({ data }) => data?.collectionPoints.map((point) => getWastesByPoints(point)))
-      .catch((error) => console.error(error))
-      .finally(setLoading(false))
-  }
-
-  const getCollectionPointsZipCode = async ({ location }) => {
-    setLoading(true)
-    await getCollectionPointsByZipCode({ zip_code: location })
       .then(({ data }) => setPoints(data?.collectionPoints))
       .catch((error) => console.error(error))
       .finally(setLoading(false))
   }
 
+  const getCollectionPointsByWastes = async ({ wastes }) => {
+    setLoading(true)
+    await getCollectionPointsFilter({ wastes })
+      .then(({ data }) => setPoints(data?.collectionPoints))
+      .catch((error) => toast.error(error))
+      .finally(setLoading(false))
+  }
+
   const handleOnSubmit = (event) => {
     event.preventDefault()
-    getCollectionPointsZipCode({ location })
+    const wastes = wastesFilter.map((waste) => `${waste.id}`)
+    getCollectionPointsByWastes({ wastes })
+
   }
 
   const handleOnScheduleCollection = async({ day, residues, cnpj, cpf, user_name, weight, status }) => {
@@ -77,6 +65,10 @@ export const CollectionProvider = ({ children }) => {
     getCollectionPoints()
   }, [])
 
+  useEffect(() => {
+    if (wastesFilter.length === 0) getCollectionPoints()
+  }, [wastesFilter])
+
   const values = {
     loading,
     setLoading,
@@ -87,7 +79,9 @@ export const CollectionProvider = ({ children }) => {
     handleOnSubmit,
     handleOnScheduleCollection,
     visible,
-    setVisible
+    setVisible,
+    wastesFilter, 
+    setWastesFilter
   }
 
   return (

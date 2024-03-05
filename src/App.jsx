@@ -1,3 +1,9 @@
+
+import "primereact/resources/themes/lara-light-indigo/theme.css"
+import "primereact/resources/primereact.min.css"
+
+import 'primeicons/primeicons.css'
+
 import { ThemeProvider } from 'styled-components'
 import { Routes } from './routes'
 import { Theme } from './styles/theme';

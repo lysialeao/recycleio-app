@@ -16,13 +16,13 @@ export const WasteProvider = ({ children }) => {
   const [wastes, setWastes] = useState([])
   const [userWastes, setUserWastes] = useState([])
   const [userWastesFormatted, setUserWastesFormatted] = useState([])
+  const [allWastes, setAllWastes] = useState([])
 
   const { user } = useContext(UserContext)
-  const cnpj = user?.data?.cnpj || '12'
 
   const getWasteByPoint = async () => {
     setLoading(true)
-    await getWasteByCollectionPoint({ collection_point_id: cnpj })
+    await getWasteByCollectionPoint({ collection_point_id: user?.data?.cnpj })
       .then(({ data }) => {
         setUserWastes(data?.wasteByCollectionPoint)
         getAll({ userWastes: data?.wasteByCollectionPoint})
@@ -76,18 +76,32 @@ export const WasteProvider = ({ children }) => {
       })
   }
 
+  const getAllWastes = async () => {
+    setLoading(true)
+    await getAllWaste()
+      .then(({ data }) => setAllWastes(data?.waste))
+      .catch(({ error }) => toast.error(error))
+      .finally(setLoading(false))
+  }
+
   const values = {
     loading,
     wastes,
     userWastes,
     userWastesFormatted,
     addWaste,
-    updateWaste
+    updateWaste,
+    allWastes,
+    getAllWastes
   }
 
    useEffect(() => {
     getWasteByPoint()
   }, [])
+
+  useEffect(() => {
+    getWasteByPoint()
+  }, [user])
 
 
   return (
