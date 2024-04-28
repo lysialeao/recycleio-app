@@ -1,14 +1,14 @@
-import { useContext, useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
-import { UserContext } from '../../context/userContext'
+import { useContext, useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
-import logo from '../../assets/logo.png'
+import logo from "../../assets/logo.png";
 
-import { 
-  userItems, 
-  collectionPointItems, 
-  notLoggedItems 
-} from '../../constants/menu'
+import {
+  userItems,
+  collectionPointItems,
+  notLoggedItems,
+} from "../../constants/menu";
 
 import {
   Container,
@@ -19,116 +19,111 @@ import {
   WrapperLinks,
   Logo,
   OpenLinksButton,
-} from "./styles"
-
+} from "./styles";
 
 export const Menu = () => {
-  const [items, setItems] = useState([])
-  const [extended, setExtended] = useState(false)
+  const [items, setItems] = useState([]);
+  const [extended, setExtended] = useState(false);
 
+  const { user, signout } = useContext(UserContext);
 
-  const { user, signout } = useContext(UserContext)
-
-  const { login, data } = user || false
+  const { login, data } = user || false;
 
   const getItems = () => {
-    let items
+    let items;
 
-    if(login) {
-      if (data.cnpj) items = collectionPointItems
-      if(data.cpf) items = userItems
-    }else {
-      items = notLoggedItems
+    if (login) {
+      if (data.cnpj) items = collectionPointItems;
+      if (data.cpf) items = userItems;
+    } else {
+      items = notLoggedItems;
     }
 
-    return setItems(items)
-  }
- 
+    return setItems(items);
+  };
+
   useEffect(() => {
-    getItems()
-  }, [login])
+    getItems();
+  }, [login]);
 
   return (
-
     <Container extendedNavigation={extended}>
       <InnerNavigation>
         <LeftWrapper>
-          <Logo src={logo} />
+          <NavLink to="/">
+            <Logo src={logo} />
+          </NavLink>
         </LeftWrapper>
         <RightWrapper>
-        <WrapperLinks>
-          { items?.map((item, index) => {
-          return (
-            <NavLink to={item.route}
-              key={index}
-              style={({ isActive}) => {
-                return {
-                  fontWeight: isActive ? "bold" : "normal",
-                  borderBottom: isActive ? 'solid 1px' : 'none'
-                }
-              }}
-            >
-              {item.label}
-            </NavLink>
-          )
-        })}
-        {
-          user?.login && (
-            <NavLink to={'/'}
-            style={({ $isActive }) => ({
-              fontWeight: $isActive ? 'bold' : 'normal',
-              borderBottom: $isActive ? 'solid 1px' : 'none'
+          <WrapperLinks>
+            {items?.map((item, index) => {
+              return (
+                <NavLink
+                  to={item.route}
+                  key={index}
+                  style={({ isActive }) => {
+                    return {
+                      fontWeight: isActive ? "bold" : "normal",
+                      borderBottom: isActive ? "solid 1px" : "none",
+                    };
+                  }}
+                >
+                  {item.label}
+                </NavLink>
+              );
             })}
-              onClick={signout}
-            >
-              Sair
-            </NavLink>
-          )
-        }
+            {user?.login && (
+              <NavLink
+                to={"/"}
+                style={({ $isActive }) => ({
+                  fontWeight: $isActive ? "bold" : "normal",
+                  borderBottom: $isActive ? "solid 1px" : "none",
+                })}
+                onClick={signout}
+              >
+                Sair
+              </NavLink>
+            )}
           </WrapperLinks>
           <OpenLinksButton onClick={() => setExtended((curr) => !curr)}>
             {extended ? <> &#10005;</> : <> &#8801;</>}
           </OpenLinksButton>
-         
         </RightWrapper>
       </InnerNavigation>
-      {
-        extended && (
-          <ExtendNavigation>
-            { items?.map((item, index) => {
-              return (
-                <NavLink to={item.route}
+      {extended && (
+        <ExtendNavigation>
+          {items?.map((item, index) => {
+            return (
+              <NavLink
+                to={item.route}
                 key={index}
-                style={({ isActive}) => {
+                style={({ isActive }) => {
                   return {
                     fontWeight: isActive ? "bold" : "normal",
-                    borderBottom: isActive ? 'solid 1px' : 'none'
-                  }
+                    borderBottom: isActive ? "solid 1px" : "none",
+                  };
                 }}
-                >
-                  {item.label}
-                </NavLink>
-              )
-            })}
-            {
-              user?.login && (
-                <NavLink to={'/'}
-                  style={({ isActive }) => {
-                    return {
-                      fontWeight: isActive ? 'bold' : 'normal',
-                      borderBottom: isActive ? 'solid 1px' : 'none'
-                    }
-                  }}
-                  onClick={signout}
-                >
-                  Sair
-                </NavLink>
-              )
-            }
-
-          </ExtendNavigation>
-        )
-      }
+              >
+                {item.label}
+              </NavLink>
+            );
+          })}
+          {user?.login && (
+            <NavLink
+              to={"/"}
+              style={({ isActive }) => {
+                return {
+                  fontWeight: isActive ? "bold" : "normal",
+                  borderBottom: isActive ? "solid 1px" : "none",
+                };
+              }}
+              onClick={signout}
+            >
+              Sair
+            </NavLink>
+          )}
+        </ExtendNavigation>
+      )}
     </Container>
   );
-}
+};
