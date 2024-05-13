@@ -70,6 +70,9 @@ export const LandingPage = () => {
           </Wrapper>
           <Image src="https://cdn.dribbble.com/users/2024671/screenshots/5454098/media/b9f345266ff578a296f0d01c5e3697c9.jpg?resize=800x600&vertical=center" />
         </Section>
+        <WrapperCards>
+          <CardsInfos />
+        </WrapperCards>
       </Container>
     </Layout>
   );

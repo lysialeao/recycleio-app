@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -12,7 +12,7 @@ export const Container = styled.div`
   h2 {
     color: ${({ theme }) => theme.color.secondary.main};
   }
-`
+`;
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
@@ -23,17 +23,20 @@ export const Row = styled.div`
   .p-float-label {
     width: 100%;
 
+    .p-multiselect {
+      width: 100%;
+    }
+
     .p-inputtext {
-      width: 100%
+      width: 100%;
     }
   }
-
-`
+`;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-`
+`;
 
 export const ContentButton = styled.div`
   display: flex;
@@ -42,4 +45,4 @@ export const ContentButton = styled.div`
   justify-content: right;
 
   padding: ${({ theme }) => `${theme.padding.medium} 0`};
-`
+`;
