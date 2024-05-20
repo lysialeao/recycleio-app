@@ -5,6 +5,7 @@ import { UserContext } from "./context/userContext";
 
 import { Profile } from "./views/Profile";
 import { Register } from "./views/Register";
+import { RegisterUser } from "./views/RegisterUser";
 import { Login } from "./views/Login/index";
 import { LandingPage } from "./views/LandingPage";
 import { WasteManager } from "./views/WasteManager";
@@ -50,6 +51,7 @@ export const Routes = () => {
         />
         <Route element={<Private Item={Reports} />} path={"/reports"} exact />
         <Route element={<Register />} path="/register" exact />
+        <Route element={<RegisterUser />} path="/register/user" exact />
       </Router>
     </BrowserRouter>
   );

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const Form = styled.form`
   display: flex;
@@ -22,5 +22,6 @@ export const Form = styled.form`
 
   a {
     text-decoration: none;
+    color: #d2691e;
   }
-`
+`;

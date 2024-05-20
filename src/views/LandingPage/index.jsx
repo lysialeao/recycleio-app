@@ -41,7 +41,7 @@ export const LandingPage = () => {
             </h1>
             Para agendar uma coleta, crie login na plataforma. Busque pelo ponto
             coletor e agende no dia e horários disponíveis
-            <NavLink to="/register">
+            <NavLink to="/register/user">
               <Button
                 label={"Fazer cadastro na plataforma"}
                 icon="pi pi-fw pi-search-plus"
