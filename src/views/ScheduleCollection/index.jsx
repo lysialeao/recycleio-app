@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
-import { MultiSelect } from "primereact/multiselect";
+
+import { Dropdown } from "primereact/dropdown";
+
 import { Calendar } from "primereact/calendar";
 
 import { FORM } from "../../constants/form";
@@ -69,7 +71,7 @@ export const ScheduleCollection = () => {
           </Wrapper>
 
           <Wrapper>
-            <MultiSelect
+            <Dropdown
               value={residues}
               onChange={(event) => setResidues(event.value)}
               options={residuess}
@@ -79,7 +81,12 @@ export const ScheduleCollection = () => {
               maxSelectedLabels={1}
               className="w-full md:w-20rem"
             />
-            <Calendar value={day} onChange={(e) => setDay(e.value)} showIcon />
+            <Calendar
+              value={day}
+              onChange={(e) => setDay(e.value)}
+              showIcon
+              minDate={new Date()}
+            />
             <Button
               label={FORM.SCHEDULE_COLLECTION}
               severity="warning"
@@ -92,7 +99,9 @@ export const ScheduleCollection = () => {
                 })
               }
               disabled={!user?.login}
-              tooltip="É preciso estar logado para agendar uma coleta"
+              tooltip={
+                !user?.login && "É preciso estar logado para agendar uma coleta"
+              }
               tooltipOptions={{ position: "bottom", showOnDisabled: true }}
             />
           </Wrapper>
