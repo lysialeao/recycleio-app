@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Row = styled.div`
   display: flex;
@@ -13,13 +13,12 @@ export const Row = styled.div`
   .p-float-label {
     width: 100%;
 
-    .p-inputtext {
-      width: 100%
+    .p-inputtext,
+    .p-inputnumber {
+      width: 100%;
     }
   }
-
-
-`
+`;
 
 export const ContentButton = styled.div`
   display: flex;
@@ -28,4 +27,4 @@ export const ContentButton = styled.div`
   justify-content: right;
 
   padding: ${({ theme }) => `${theme.padding.medium} 0`};
-`
+`;

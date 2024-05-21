@@ -27,7 +27,8 @@ export const Row = styled.div`
       width: 100%;
     }
 
-    .p-inputtext {
+    .p-inputtext,
+    .p-inputnumber {
       width: 100%;
     }
   }

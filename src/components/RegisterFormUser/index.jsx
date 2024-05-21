@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { InputText } from "primereact/inputtext";
+import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
 
 import { AddressForm } from "../AddressForm";
-
-import { InputCPF } from "../InputCPF";
 
 import { FORM } from "../../constants/form";
 import { checkEmail } from "../../services/login";
@@ -55,15 +54,19 @@ export const RegisterFormUser = ({ onChange, onSubmit, loading, data }) => {
               <label htmlFor="last_name">Sobrenome</label>
             </span>
             <span className="p-float-label">
-              <InputCPF
+              <InputNumber
                 value={data?.cpf}
-                type="text"
+                maxLength={9}
+                minLength={9}
                 id="cpf"
-                onChange={(event) =>
-                  onChange({ id: "cpf", value: event.target.value })
+                allowEmpty={false}
+                onValueChange={(event) =>
+                  onChange({ id: "cpf", value: event.value })
                 }
                 required
+                useGrouping={false}
               />
+              <label htmlFor="cpf">CPF</label>
             </span>
           </Row>
         </AccordionTab>

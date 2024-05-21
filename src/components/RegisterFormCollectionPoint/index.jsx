@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { InputText } from "primereact/inputtext";
+import { InputNumber } from "primereact/inputnumber";
 import { MultiSelect } from "primereact/multiselect";
 import { Button } from "primereact/button";
 import { Accordion, AccordionTab } from "primereact/accordion";
@@ -52,13 +53,15 @@ export const RegisterFormCollectionPoint = ({
           <AccordionTab header="Dados da empresa">
             <Row>
               <span className="p-float-label">
-                <InputText
-                  type="text"
+                <InputNumber
                   id="cnpj"
-                  onChange={(event) =>
-                    onChange({ id: "cnpj", value: event.target.value })
+                  onValueChange={(event) =>
+                    onChange({ id: "cnpj", value: event.value })
                   }
                   required
+                  maxLength={14}
+                  minLength={14}
+                  useGrouping={false}
                 />
                 <label htmlFor="cnpj">CNPJ</label>
               </span>
@@ -91,12 +94,13 @@ export const RegisterFormCollectionPoint = ({
             <Row>
               <span className="p-float-label">
                 <InputText
-                  type="text"
+                  type="number"
                   id="telephone"
                   onChange={(event) =>
                     onChange({ id: "telephone", value: event.target.value })
                   }
                   required
+                  max={9}
                 />
                 <label htmlFor="telephone">Telefone</label>
               </span>
