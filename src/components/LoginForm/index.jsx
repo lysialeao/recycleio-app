@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 
 import { InputText } from "primereact/inputtext";
-import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 
 import { FORM } from "../../constants/form";
@@ -23,12 +22,13 @@ export const LoginForm = ({ onChange, onSubmit, loading }) => {
         <label htmlFor="login">{FORM.LOGIN}</label>
       </span>
       <span className="p-float-label">
-        <Password
+        <InputText
           id="password"
           onChange={(event) =>
             onChange({ id: "password", value: event.target.value })
           }
           required
+          type="password"
         />
         <label htmlFor="password">{FORM.PASSWORD}</label>
       </span>

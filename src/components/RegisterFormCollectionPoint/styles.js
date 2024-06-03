@@ -28,7 +28,8 @@ export const Row = styled.div`
     }
 
     .p-inputtext,
-    .p-inputnumber {
+    .p-inputnumber,
+    .p-password {
       width: 100%;
     }
   }

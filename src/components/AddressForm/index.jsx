@@ -5,20 +5,30 @@ import { InputNumber } from "primereact/inputnumber";
 import { Row } from "./styles";
 
 export const AddressForm = ({ onChange, data }) => {
+  const handleZipCodeChange = (event) => {
+    const { value } = event.target;
+    onChange({ id: "zip_code", value });
+  };
+
+  const handleKeyPress = (event) => {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <>
       <Row>
         <span className="p-float-label">
-          <InputNumber
+          <InputText
             id="zip_code"
-            onValueChange={(event) =>
-              onChange({ id: "zip_code", value: event.value })
-            }
             value={data.zip_code}
+            onChange={handleZipCodeChange}
+            onKeyPress={handleKeyPress}
             required
             maxLength={8}
             minLength={8}
-            useGrouping={false}
           />
           <label htmlFor="zip_code">CEP</label>
         </span>
@@ -44,7 +54,7 @@ export const AddressForm = ({ onChange, data }) => {
             value={data.city}
             required
           />
-          <label htmlFor="zip_code">Cidade</label>
+          <label htmlFor="city">Cidade</label>
         </span>
       </Row>
       <Row>
@@ -55,7 +65,7 @@ export const AddressForm = ({ onChange, data }) => {
             onChange={(event) =>
               onChange({ id: "neighborhood", value: event.target.value })
             }
-            initialvalue={data.neighborhood}
+            value={data.neighborhood}
             required
           />
           <label htmlFor="neighborhood">Bairro</label>
@@ -67,20 +77,21 @@ export const AddressForm = ({ onChange, data }) => {
             onChange={(event) =>
               onChange({ id: "street", value: event.target.value })
             }
-            initialvalue={data.street}
+            value={data.street}
             required
           />
           <label htmlFor="street">Logradouro</label>
         </span>
         <span className="p-float-label">
-          <InputText
+          <InputNumber
             type="text"
             id="number"
             onChange={(event) =>
               onChange({ id: "number", value: event.target.value })
             }
-            initialvalue={data.number}
+            value={data.number}
             required
+            maxLength={5}
           />
           <label htmlFor="number">Número</label>
         </span>

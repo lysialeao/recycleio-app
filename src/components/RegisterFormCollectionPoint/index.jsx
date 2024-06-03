@@ -13,6 +13,7 @@ import { SELECT_DAYS } from "../../constants/days";
 import { AddressForm } from "../AddressForm";
 
 import { Container, Form, Row, ContentButton } from "./styles";
+import { Password } from "primereact/password";
 
 export const RegisterFormCollectionPoint = ({
   onChange,
@@ -93,14 +94,14 @@ export const RegisterFormCollectionPoint = ({
             </Row>
             <Row>
               <span className="p-float-label">
-                <InputText
-                  type="number"
+                <InputNumber
                   id="telephone"
                   onChange={(event) =>
                     onChange({ id: "telephone", value: event.target.value })
                   }
                   required
-                  max={9}
+                  maxLength={9}
+                  useGrouping={false}
                 />
                 <label htmlFor="telephone">Telefone</label>
               </span>
@@ -179,7 +180,7 @@ export const RegisterFormCollectionPoint = ({
                 )}
               </span>
               <span className="p-float-label">
-                <InputText
+                <Password
                   value={data?.password}
                   type="password"
                   id="password"
@@ -187,8 +188,13 @@ export const RegisterFormCollectionPoint = ({
                     onChange({ id: "password", value: event.target.value })
                   }
                   required
+                  promptLabel="Digite a senha"
+                  weakLabel="Muito fraca"
+                  mediumLabel="Aceitável"
+                  strongLabel="Perfeito"
+                  toggleMask
                 />
-                <label htmlFor="email">Senha</label>
+                <label htmlFor="password">Senha</label>
               </span>
             </Row>
           </AccordionTab>

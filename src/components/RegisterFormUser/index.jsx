@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
 import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
 
@@ -93,16 +94,20 @@ export const RegisterFormUser = ({ onChange, onSubmit, loading, data }) => {
               )}
             </span>
             <span className="p-float-label">
-              <InputText
+              <Password
                 value={data?.password}
-                type="password"
                 id="password"
                 onChange={(event) =>
                   onChange({ id: "password", value: event.target.value })
                 }
                 required
+                promptLabel="Digite a senha"
+                weakLabel="Muito fraca"
+                mediumLabel="Aceitável"
+                strongLabel="Perfeito"
+                toggleMask
               />
-              <label htmlFor="email">Senha</label>
+              <label htmlFor="password">Senha</label>
             </span>
           </Row>
         </AccordionTab>

@@ -14,7 +14,8 @@ export const Row = styled.div`
     width: 100%;
 
     .p-inputtext,
-    .p-inputnumber {
+    .p-inputnumber,
+    .p-password {
       width: 100%;
     }
   }
