@@ -8,7 +8,7 @@ import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
 import { MultiSelect } from "primereact/multiselect";
 import { Calendar } from "primereact/calendar";
-
+import { InputNumber } from "primereact/inputnumber";
 import { Layout } from "../../components/Layout";
 
 import { UserContext } from "../../context/userContext";
@@ -46,7 +46,7 @@ export const CollectionManeger = () => {
     date: "",
     status: null,
     waste: [],
-    weight: "",
+    weight: 0,
   });
 
   const toast = useRef(null);
@@ -252,13 +252,14 @@ export const CollectionManeger = () => {
               optionLabel="name"
               placeholder="Selecione o status"
               className="w-full md:w-14rem"
+              required
             />
             <label htmlFor="username">Peso</label>
-            <InputText
-              id="username"
+            <InputNumber
+              id="weight"
               aria-describedby="username-help"
               value={weight}
-              onChange={(e) => setWeight(e.target.value)}
+              onValueChange={(e) => setWeight(e.value)}
               required
             />
             <small id="username-help">
@@ -330,15 +331,17 @@ export const CollectionManeger = () => {
               className="w-full md:w-20rem"
             />
             <label htmlFor="weight">Peso</label>
-            <InputText
+            <InputNumber
               id="weight"
               value={newCollection.weight}
               onChange={(e) =>
                 setNewCollection((curr) => ({
                   ...curr,
-                  weight: e.target.value,
+                  weight: e.target,
                 }))
               }
+              minFractionDigits={2}
+              maxFractionDigits={5}
               required
             />
             <small id="weight-help">
