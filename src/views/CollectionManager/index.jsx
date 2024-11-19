@@ -64,6 +64,8 @@ export const CollectionManeger = () => {
         });
         setUpdate(true);
         setDisplayDialog(false);
+        setStatus("");
+        setWeight("");
       })
       .catch((error) => {
         console.error(error);
@@ -78,17 +80,18 @@ export const CollectionManeger = () => {
       detail: "Vamos tentar novamente?",
       life: 3000,
     });
-    setDisplayDialog(false);
+    return setDisplayDialog(false);
   }, []);
 
   const cancel = useCallback(() => {
     toast.current.show({
       severity: "warn",
       summary: "Ação cancelada",
-      detail: "Você pode atualizar esta coleta quando quiser!",
+      detail: "Você pode acessar as coletas quando quiser!",
       life: 3000,
     });
     setDisplayDialog(false);
+    setModal(false);
   }, []);
 
   const renderFooter = useCallback(() => {
@@ -154,7 +157,14 @@ export const CollectionManeger = () => {
           life: 3000,
         });
         setUpdate(true);
-        setDisplayDialog(false);
+        setModal(false);
+        setNewCollection({
+          client: "",
+          date: "",
+          status: null,
+          waste: [],
+          weight: 0,
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -261,6 +271,11 @@ export const CollectionManeger = () => {
               value={weight}
               onValueChange={(e) => setWeight(e.value)}
               required
+              mode="decimal"
+              minFractionDigits={2}
+              maxFractionDigits={5}
+              decimalSeparator="."
+              thousandSeparator=","
             />
             <small id="username-help">
               Digite o peso total dos resíduos que foram coletados.
@@ -335,14 +350,16 @@ export const CollectionManeger = () => {
               id="weight"
               value={newCollection.weight}
               onChange={(e) =>
-                setNewCollection((curr) => ({
-                  ...curr,
-                  weight: e.target,
-                }))
+                setNewCollection({
+                  ...newCollection,
+                  weight: e.value,
+                })
               }
+              mode="decimal"
               minFractionDigits={2}
               maxFractionDigits={5}
-              required
+              decimalSeparator="."
+              thousandSeparator=","
             />
             <small id="weight-help">
               Digite o peso total dos resíduos que foram coletados.
