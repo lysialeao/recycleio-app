@@ -1,55 +1,73 @@
-import { useState, useEffect, createContext } from 'react'
-import PropTypes from 'prop-types'
+import { useState, useEffect, createContext } from "react";
+import PropTypes from "prop-types";
 
-import { toast } from 'react-hot-toast'
+import { toast } from "react-hot-toast";
 
-import { getAddress } from '../services/login'
+import { getAddress } from "../services/login";
 
-export const UserContext = createContext()
+export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(() => {
+    const storedAddressId = localStorage.getItem("address_id");
 
-  const [user, setUser] = useState({ login: false })
-  const [loading, setLoading] = useState(false)
+    const cpfUser = localStorage.getItem("cpf");
+    const cnpjUser = localStorage.getItem("cnpj");
 
-  
+    let document;
+
+    if (cnpjUser) {
+      document = { cnpj: cnpjUser };
+    } else if (cpfUser) {
+      document = { cpf: cpfUser };
+    }
+
+    return {
+      login: localStorage.getItem("login") || false,
+      data: {
+        address_id: storedAddressId,
+        ...document,
+      },
+    };
+  });
+
+  const [loading, setLoading] = useState(false);
 
   const getUserAddress = async ({ id }) => {
     await getAddress({ id })
-      .then(({ data} ) => setUser((prevState) => ({
-        ...prevState,
-        address: data.address[0]
-      })))
-      .catch((error) =>  toast.error(error.message))
-  }
+      .then(({ data }) =>
+        setUser((prevState) => ({
+          ...prevState,
+          address: data.address[0],
+        }))
+      )
+      .catch((error) => toast.error(error.message));
+  };
 
   useEffect(() => {
     if (user.login) {
-      getUserAddress({ id: user?.data?.address_id})
+      getUserAddress({ id: user?.data?.address_id });
     }
-  }, [user.login])
+  }, [user.login]);
 
   const signout = () => {
     setUser({
-      login: false
-    })
-  }
+      login: false,
+    });
+    localStorage.clear();
+  };
 
   const values = {
     user,
     setUser,
     loading,
     setLoading,
-    signout
-  }
+    signout,
+  };
 
-  return (
-    <UserContext.Provider value={values}>
-      {children}
-    </UserContext.Provider>
-  )
-}
+  return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
+};
 
 UserProvider.propTypes = {
-  children: PropTypes.node
-}
+  children: PropTypes.node,
+};

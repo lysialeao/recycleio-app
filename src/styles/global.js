@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -14,20 +14,29 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        font-family: (--font-family);
-        font: 14px 'Roboto', sans-serif;
+        font-family: 'Roboto', sans-serif;
+        font-family: 14px 'Roboto', sans-serif;
         background: ${({ theme }) => theme.color.white};
         color:  ${({ theme }) => theme.color.black};
         -web-kit-smoothing: antialiased !important;
 
         .p-multiselect-token {
           background: ${({ theme }) => theme.color.secondary.main} !important;
-          color: ${({ theme }) => theme.color.secondary.contrastText} !important;
+          color: ${({ theme }) =>
+            theme.color.secondary.contrastText} !important;
         }
 
         .p-checkbox .p-checkbox-box.p-highlight {
           color: ${({ theme }) => theme.color.secondary.main} !important;
         }
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    h2 {
+      font-size: 16px;
     }
 
     ul {
@@ -46,4 +55,4 @@ export const GlobalStyle = createGlobalStyle`
         background-color: ${({ theme }) => theme.color.primary.contrastText};
         border-radius: 50px;
       }
-`
+`;

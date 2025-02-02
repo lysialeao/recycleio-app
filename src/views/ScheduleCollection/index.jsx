@@ -25,6 +25,7 @@ import {
   ProfilePoint,
   WrapperCards,
   Card,
+  GoBack,
 } from "./styles";
 import { REPORTS_INFOS } from "../../constants/reports-infos";
 
@@ -44,7 +45,13 @@ export const ScheduleCollection = () => {
     };
   });
 
-  const { trade_name, address_details, collection_days } = point[0] || "";
+  const {
+    trade_name,
+    address_details,
+    collection_days,
+    collection_responsible_name,
+  } = point[0] || "";
+
   const { street, city } = address_details || "";
 
   const messageDays = `Recebendo coletas nos dias: ${collection_days}`;
@@ -52,7 +59,12 @@ export const ScheduleCollection = () => {
   return (
     <Layout>
       <Container>
-        <Header />
+        <Header>
+          <GoBack>
+            {" "}
+            <h2>⬅ Voltar para listagem</h2>
+          </GoBack>
+        </Header>
         <Content>
           <ProfilePoint>
             <h1>{trade_name}</h1>
@@ -60,15 +72,19 @@ export const ScheduleCollection = () => {
               A {trade_name} está localizada em {street}, {city}{" "}
             </h2>
             <h2>{messageDays}</h2>
+            <h2>
+              Quem vai te atender será {collection_responsible_name},
+              responsável pelas coletas
+            </h2>
+            <div>
+              <WrapperCards>
+                <h2>Resíduos coletados:</h2>
+                {residuess?.map((residue) => (
+                  <Tag severity="success" value={residue.name} />
+                ))}
+              </WrapperCards>
+            </div>
           </ProfilePoint>
-          <Wrapper>
-            <h2>Resíduos coletados</h2>
-            <WrapperCards>
-              {residuess?.map((residue) => (
-                <Tag severity="success" value={residue.name} />
-              ))}
-            </WrapperCards>
-          </Wrapper>
 
           <Wrapper>
             <Dropdown
@@ -79,7 +95,7 @@ export const ScheduleCollection = () => {
               display="chip"
               placeholder={FORM.SELECT_RESIDUES}
               maxSelectedLabels={1}
-              className="w-full md:w-20rem"
+              className="w-full"
             />
             <Calendar
               value={day}

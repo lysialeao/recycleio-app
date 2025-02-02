@@ -42,11 +42,11 @@ export const CollectionManeger = () => {
   const [modal, setModal] = useState(false);
 
   const [newCollection, setNewCollection] = useState({
-    client: "",
-    date: "",
+    client: null,
+    date: null,
     status: null,
     waste: [],
-    weight: 0,
+    weight: null,
   });
 
   const toast = useRef(null);
@@ -108,6 +108,9 @@ export const CollectionManeger = () => {
           label="Atualizar coleta"
           severity="success"
           icon="pi pi-check"
+          disabled={
+            !["Cancelado", "Agendado"].includes(status.name) && weight === null
+          }
           onClick={accept}
           autoFocus
         />
@@ -143,7 +146,7 @@ export const CollectionManeger = () => {
 
     handleOnScheduleCollection({
       day: date,
-      residues: waste[0],
+      residues: waste,
       cnpj,
       weight,
       user_name: client,
@@ -171,6 +174,18 @@ export const CollectionManeger = () => {
         reject();
       });
   });
+  const isButtonDisabled = () => {
+    if (
+      newCollection.client === null ||
+      newCollection.date === null ||
+      newCollection.status === null ||
+      (!["Cancelado", "Agendado"].includes(newCollection.status.name) &&
+        newCollection.weight === null)
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   const renderFooterNewCollection = useCallback(() => {
     return (
@@ -186,6 +201,7 @@ export const CollectionManeger = () => {
           label="Inserir coleta"
           severity="success"
           icon="pi pi-check"
+          disabled={isButtonDisabled()}
           onClick={acceptNewCollection}
           autoFocus
         />
@@ -330,7 +346,7 @@ export const CollectionManeger = () => {
               className="w-full md:w-14rem"
             />
             <label htmlFor="waste">Resíduo</label>
-            <MultiSelect
+            <Dropdown
               value={newCollection.waste}
               options={residuess}
               onChange={(e) =>
@@ -341,7 +357,7 @@ export const CollectionManeger = () => {
               }
               optionLabel="name"
               display="chip"
-              placeholder={"l"}
+              placeholder={"Selecione o resíduo"}
               maxSelectedLabels={1}
               className="w-full md:w-20rem"
             />

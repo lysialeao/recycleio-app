@@ -58,7 +58,7 @@ export const CollectionProvider = ({ children }) => {
       user_id: cpf,
       collection_point_id: cnpj,
       date_time: day,
-      waste_id: residuesToCollection,
+      waste_id: residuesToCollection || null,
       user_name,
       weight,
       status,

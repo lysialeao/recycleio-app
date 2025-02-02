@@ -1,7 +1,4 @@
-import { useContext } from "react";
 import { Route, BrowserRouter, Routes as Router } from "react-router-dom";
-
-import { UserContext } from "./context/userContext";
 
 import { Profile } from "./views/Profile";
 import { Register } from "./views/Register";
@@ -15,12 +12,10 @@ import { FindCollectionPoint } from "./views/FindCollectionPoint";
 import { Reports } from "./views/Reports";
 
 export const Routes = () => {
-  const { user } = useContext(UserContext);
-
   const Private = ({ Item }) => {
-    const sigend = user?.login || false;
+    const sigend = localStorage.getItem("login") || false;
 
-    return sigend > 0 ? <Item /> : <Login />;
+    return sigend ? <Item /> : <Login />;
   };
 
   return (
