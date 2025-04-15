@@ -7,6 +7,7 @@ import { Tag } from "primereact/tag";
 import { Dropdown } from "primereact/dropdown";
 
 import { Calendar } from "primereact/calendar";
+import { addLocale } from "primereact/api";
 
 import { FORM } from "../../constants/form";
 
@@ -24,10 +25,8 @@ import {
   Content,
   ProfilePoint,
   WrapperCards,
-  Card,
   GoBack,
 } from "./styles";
-import { REPORTS_INFOS } from "../../constants/reports-infos";
 
 export const ScheduleCollection = () => {
   const { id } = useParams();
@@ -56,6 +55,60 @@ export const ScheduleCollection = () => {
 
   const messageDays = `Recebendo coletas nos dias: ${collection_days}`;
 
+  const tooltipMessage = () => {
+    if (!user.login) return "É preciso estar logado para agendar uma coleta";
+    if (user.data.cnpj)
+      return "Pontos coletores não podem agendar coletas em outros pontos.";
+  };
+
+  addLocale("pt", {
+    firstDayOfWeek: 1,
+    showMonthAfterYear: true,
+    dayNames: [
+      "domingo",
+      "segunda",
+      "terça",
+      "quarta",
+      "quinta",
+      "sexta",
+      "sábado",
+    ],
+    dayNamesShort: ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"],
+    dayNamesMin: ["D", "S", "T", "Q", "Q", "S", "S"],
+    monthNames: [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ],
+    monthNamesShort: [
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
+    ],
+    today: "Hoje",
+    clear: "Limpar",
+  });
+
+  const isDisabled = !user?.login || user.data.cnpj || !(residues && day);
+
   return (
     <Layout>
       <Container>
@@ -79,8 +132,8 @@ export const ScheduleCollection = () => {
             <div>
               <WrapperCards>
                 <h2>Resíduos coletados:</h2>
-                {residuess?.map((residue) => (
-                  <Tag severity="success" value={residue.name} />
+                {residuess?.map((residue, index) => (
+                  <Tag key={index} severity="success" value={residue.name} />
                 ))}
               </WrapperCards>
             </div>
@@ -102,6 +155,9 @@ export const ScheduleCollection = () => {
               onChange={(e) => setDay(e.value)}
               showIcon
               minDate={new Date()}
+              showTime
+              hourFormat="12"
+              locale="pt"
             />
             <Button
               label={FORM.SCHEDULE_COLLECTION}
@@ -114,10 +170,8 @@ export const ScheduleCollection = () => {
                   cpf: user?.data?.cpf,
                 })
               }
-              disabled={!user?.login}
-              tooltip={
-                !user?.login && "É preciso estar logado para agendar uma coleta"
-              }
+              disabled={isDisabled}
+              tooltip={tooltipMessage()}
               tooltipOptions={{ position: "bottom", showOnDisabled: true }}
             />
           </Wrapper>
