@@ -329,6 +329,10 @@ export const CollectionManeger = () => {
                 }))
               }
               showIcon
+              minDate={new Date()}
+              showTime
+              hourFormat="12"
+              locale="pt-BR"
             />
             <label htmlFor="status">Status</label>
             <Dropdown

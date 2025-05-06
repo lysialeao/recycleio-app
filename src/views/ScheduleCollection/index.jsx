@@ -61,7 +61,7 @@ export const ScheduleCollection = () => {
       return "Pontos coletores não podem agendar coletas em outros pontos.";
   };
 
-  addLocale("pt", {
+  addLocale("pt-BR", {
     firstDayOfWeek: 1,
     showMonthAfterYear: true,
     dayNames: [
@@ -105,6 +105,8 @@ export const ScheduleCollection = () => {
     ],
     today: "Hoje",
     clear: "Limpar",
+    am: "Manhã",
+    pm: "Tarde",
   });
 
   const isDisabled = !user?.login || user.data.cnpj || !(residues && day);
@@ -157,7 +159,7 @@ export const ScheduleCollection = () => {
               minDate={new Date()}
               showTime
               hourFormat="12"
-              locale="pt"
+              locale="pt-BR"
             />
             <Button
               label={FORM.SCHEDULE_COLLECTION}
