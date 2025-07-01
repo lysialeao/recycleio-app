@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
@@ -116,8 +116,9 @@ export const ScheduleCollection = () => {
       <Container>
         <Header>
           <GoBack>
-            {" "}
-            <h2>⬅ Voltar para listagem</h2>
+            <NavLink to="/find-collection-point">
+              <h2>⬅ Voltar para listagem</h2>
+            </NavLink>
           </GoBack>
         </Header>
         <Content>
